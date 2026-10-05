@@ -3,7 +3,16 @@
   "version": "0.1.0",
   "description": "Local-first, key-free MCP server for web search, page fetching and document parsing. Multi-engine with RRF fusion, SQLite FTS5 cache, Markdown-first output.",
   "license": "MIT",
-  "author": "lhswgzy",
+  "author": {
+    "name": "lhswg",
+    "url": "https://github.com/lhswgzy"
+  },
+  "contributors": [
+    {
+      "name": "lhswgzy",
+      "url": "https://github.com/lhswgzy"
+    }
+  ],
   "type": "module",
   "bin": {
     "free-search-mcp-ts": "dist/cli.js",
@@ -24,6 +33,7 @@
     "CHANGELOG.md",
     "SECURITY.md",
     "CONTRIBUTING.md",
+    "AUTHORS.md",
     "LICENSE",
     ".env.example"
   ],

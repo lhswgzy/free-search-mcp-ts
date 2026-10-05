@@ -73,6 +73,7 @@ First release. Everything below is new.
 
 ### Notes
 
+- **Authorship and origin.** Copyright © 2025 [lhswg](https://github.com/lhswgzy) (GitHub `lhswgzy`), MIT licensed. This is an independent, from-scratch TypeScript implementation; the idea and the older Python project belong to `sweetcornna` ([`sweetcornna/free-search-mcp`](https://github.com/sweetcornna/free-search-mcp), MIT, on PyPI as `free-search-mcp`). Not a fork, no code copied or read, no parity claimed. The npm package is deliberately `free-search-mcp-ts` rather than `free-search-mcp`, to leave the original author's project name with them. See [AUTHORS.md](AUTHORS.md).
 - Measured output cost: Markdown is 32 % fewer tokens than the equivalent JSON for a ten-result search; a fetched page's Markdown is 96–99 % smaller than the raw HTML it came from (mostly content extraction rather than the format itself).
 - Verified against live traffic: Bing, Baidu, Sogou, 360, Hacker News, GitHub, Stack Exchange, npm, crates.io, OpenAlex, Crossref, arXiv. Verified against fixtures only, because the development network cannot reach them: DuckDuckGo, Mojeek, Google News, Startpage, Brave, SearXNG, Wikipedia. See the README's verification status section.
 

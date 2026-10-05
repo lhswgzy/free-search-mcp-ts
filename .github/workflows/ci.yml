@@ -88,7 +88,7 @@ jobs:
           node -e "
             const info = require('./pack.json')[0];
             const files = info.files.map((f) => f.path);
-            const required = ['dist/cli.js', 'dist/index.js', 'README.md', 'LICENSE', 'CHANGELOG.md'];
+            const required = ['dist/cli.js', 'dist/index.js', 'README.md', 'LICENSE', 'CHANGELOG.md', 'AUTHORS.md'];
             const missing = required.filter((r) => !files.includes(r));
             if (missing.length) {
               console.error('missing from tarball:', missing.join(', '));

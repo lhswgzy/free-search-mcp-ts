@@ -2,9 +2,13 @@
 
 **本地优先、无需 API key 的 MCP 联网搜索、网页抓取与文档解析服务器。**
 
-> **来源说明。** 这是同一想法的独立 **TypeScript** 实现。更成熟的原版是 **Python** 项目
-> [sweetcornna/free-search-mcp](https://github.com/sweetcornna/free-search-mcp),以 `free-search-mcp` 之名发布在 PyPI 上。
-> 两者是不同作者、互不相关的代码库:本项目不是它的 fork,也不宣称与它功能对等。
+作者 **[lhswg](https://github.com/lhswgzy)**(GitHub `lhswgzy`)· © 2025 · MIT 协议。
+
+> **来源说明。** 本仓库是一份独立的、从零写起的 **TypeScript** 实现。这个想法以及更早、更成熟的那个
+> **Python** 项目都属于 `sweetcornna`:
+> **[sweetcornna/free-search-mcp](https://github.com/sweetcornna/free-search-mcp)** —— MIT 协议,以 `free-search-mcp`
+> 之名发布于 PyPI。本项目不是它的 fork,没有抄也没有读过它的代码,也不宣称功能对等。
+> 完整说明见 [AUTHORS.md](AUTHORS.md)。
 
 `free-search-mcp-ts` 是一个 [Model Context Protocol](https://modelcontextprotocol.io) 服务器,为 Claude、GPT、Cursor、Codex、本地 Ollama 前端以及任何支持 MCP 的客户端提供联网搜索、网页读取和文档解析能力。它完全在你自己的机器上运行,不需要注册任何账号,并且返回 Markdown 而不是 JSON —— 因为承载同样的信息,Markdown 大约能省下三分之一 token。
 
@@ -13,6 +17,7 @@
 [![CI](https://github.com/lhswgzy/free-search-mcp-ts/actions/workflows/ci.yml/badge.svg)](https://github.com/lhswgzy/free-search-mcp-ts/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D20.19-brightgreen.svg)](https://nodejs.org)
+[![Author](https://img.shields.io/badge/author-lhswg-blue.svg)](https://github.com/lhswgzy)
 
 ---
 
@@ -289,9 +294,16 @@ tests/              vitest 测试与引擎 fixture
 - **专题索引按设计就是窄的。** Wikipedia、GitHub、crates.io、arXiv 索引的是特定语料,不是整个互联网。
 - **不支持 OCR。** 扫描版 PDF 会明确报告「无可提取文本」,而不是静默返回空。
 
+## 来源与署名
+
+**作者:** [lhswg](https://github.com/lhswgzy) —— GitHub `lhswgzy`,© 2025,MIT 协议。
+**想法来源:** [`sweetcornna/free-search-mcp`](https://github.com/sweetcornna/free-search-mcp),一个 Python 项目(MIT,PyPI 上名为 `free-search-mcp`)。
+
+本仓库的代码是从零写的:不是 fork,与该项目没有共同的提交历史、没有共用的源码文件、也没有共用的引擎解析器,写它的过程中没有读过对方任何代码。npm 包特意命名为 `free-search-mcp-ts` 而不是 `free-search-mcp`,为的是让原作者在自己的登记处继续保有他自己的项目名。Python 项目的 bug 请提到[那边](https://github.com/sweetcornna/free-search-mcp/issues),不要提到这里。完整声明(包括哪些主张成立、哪些不成立)见 [AUTHORS.md](AUTHORS.md)。
+
 ## 许可证
 
-MIT,见 [LICENSE](LICENSE)。
+MIT,见 [LICENSE](LICENSE)。Copyright © 2025 [lhswg](https://github.com/lhswgzy)。
 
 ---
 

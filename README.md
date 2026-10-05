@@ -2,10 +2,13 @@
 
 **Local-first web search, page fetching and document parsing for any MCP client — with no API key.**
 
-> **Provenance.** This is an independent **TypeScript** implementation of the same idea. The original and
-> more mature **Python** project lives at [sweetcornna/free-search-mcp](https://github.com/sweetcornna/free-search-mcp)
-> and is published on PyPI as `free-search-mcp`. The two are unrelated codebases by different authors:
-> this one is not a fork of it and does not claim parity with it.
+By **[lhswg](https://github.com/lhswgzy)** (GitHub `lhswgzy`) · © 2025 · MIT licensed.
+
+> **Origin.** This repository is an independent, from-scratch **TypeScript** implementation. The idea, and the
+> older and more mature **Python** project that came first, belong to `sweetcornna`:
+> **[sweetcornna/free-search-mcp](https://github.com/sweetcornna/free-search-mcp)** — MIT, published on PyPI as
+> `free-search-mcp`. This is not a fork, none of its code was copied or read, and no parity is claimed.
+> Full statement: [AUTHORS.md](AUTHORS.md).
 
 `free-search-mcp-ts` is a [Model Context Protocol](https://modelcontextprotocol.io) server that gives Claude, GPT, Cursor, Codex, local Ollama front ends and any other MCP-capable client the ability to search the web, read pages and parse documents. It runs entirely on your machine, needs no account, and returns Markdown instead of JSON because Markdown costs a model roughly a third fewer tokens for the same information.
 
@@ -15,6 +18,7 @@ use the [Quick start](#quick-start), which builds it locally in four commands.
 [![CI](https://github.com/lhswgzy/free-search-mcp-ts/actions/workflows/ci.yml/badge.svg)](https://github.com/lhswgzy/free-search-mcp-ts/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D20.19-brightgreen.svg)](https://nodejs.org)
+[![Author](https://img.shields.io/badge/author-lhswg-blue.svg)](https://github.com/lhswgzy)
 
 ---
 
@@ -306,9 +310,21 @@ Adding an engine is one file plus one line in [`src/engines/registry.ts`](src/en
 - **The subject indexes are narrow by design.** Wikipedia, GitHub, crates.io and arXiv index specific corpora, not the web.
 - **No OCR.** A scanned PDF is reported as having no extractable text rather than silently returning nothing.
 
+## Origin and authorship
+
+**Author:** [lhswg](https://github.com/lhswgzy) — GitHub `lhswgzy` — © 2025, MIT.
+**Source of the idea:** [`sweetcornna/free-search-mcp`](https://github.com/sweetcornna/free-search-mcp), a Python project (MIT, on PyPI as `free-search-mcp`).
+
+This codebase was written from scratch. It is not a fork; it shares no commit history, no source file and no
+engine parser with that project, and nothing from it was read while this was written. The npm package is named
+`free-search-mcp-ts` rather than `free-search-mcp` deliberately, so that the original author keeps their own
+project name on their own registry. Bugs in the Python project should be reported
+[there](https://github.com/sweetcornna/free-search-mcp/issues), not here. The full statement, including what is
+and is not claimed, is in [AUTHORS.md](AUTHORS.md).
+
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE). Copyright © 2025 [lhswg](https://github.com/lhswgzy).
 
 ---
 

@@ -131,4 +131,40 @@ describe('documentation matches the implementation', () => {
       expect(ENV_EXAMPLE).toContain(key);
     }
   });
+
+  it('keeps authorship and the statement of origin', () => {
+    // This project is an independent implementation that shares a concept with
+    // an older, more mature Python project of a similar name. Two things have to
+    // stay true in the documentation: the copyright belongs to whoever wrote
+    // this code, and a reader must be told plainly which project came first.
+    // Stripping either one is the failure this guards against.
+    const authors = read('AUTHORS.md');
+    const license = read('LICENSE');
+    const pkg = JSON.parse(read('package.json')) as { name: string; author: { name: string; url: string }; files: string[] };
+
+    // 1. Copyright is asserted for this codebase, by its author.
+    expect(authors).toContain('lhswg');
+    expect(authors).toContain('lhswgzy');
+    expect(license).toContain('lhswg');
+    expect(pkg.author.name).toBe('lhswg');
+    expect(pkg.author.url).toContain('lhswgzy');
+
+    // 2. The original project is named and linked, in both READMEs and AUTHORS.
+    for (const text of [README, README_ZH, authors]) {
+      expect(text).toContain('sweetcornna/free-search-mcp');
+    }
+    expect(authors).toMatch(/not a fork/i);
+    expect(authors).toMatch(/no code/i);
+
+    // 3. The npm name deliberately differs from the original's package name, so
+    //    the original author keeps their own name on their own registry.
+    expect(pkg.name).toBe('free-search-mcp-ts');
+    expect(pkg.name).not.toBe('free-search-mcp');
+    expect(authors).toContain('free-search-mcp-ts');
+
+    // 4. AUTHORS.md has to ship with the package, or the surviving artifact
+    //    would carry no statement of origin at all.
+    expect(pkg.files).toContain('AUTHORS.md');
+    expect(pkg.files).toContain('LICENSE');
+  });
 });

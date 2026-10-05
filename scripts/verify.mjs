@@ -175,7 +175,7 @@ try {
 assert('npm pack produces a tarball', Boolean(packInfo?.filename), packInfo?.filename ?? 'no pack output');
 if (packInfo) {
   const files = (packInfo.files ?? []).map((file) => file.path);
-  const required = ['dist/cli.js', 'dist/index.js', 'README.md', 'README.zh-CN.md', 'LICENSE', 'CHANGELOG.md'];
+  const required = ['dist/cli.js', 'dist/index.js', 'README.md', 'README.zh-CN.md', 'LICENSE', 'CHANGELOG.md', 'AUTHORS.md'];
   const missing = required.filter((path) => !files.includes(path));
   assert('the tarball contains every required file', missing.length === 0, missing.length ? `missing ${missing.join(', ')}` : `${files.length} files`);
   const leaked = files.filter((path) => path.startsWith('tests/') || path.startsWith('scratch/') || path.startsWith('src/'));
