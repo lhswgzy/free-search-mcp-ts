@@ -21,7 +21,7 @@ First release. Everything below is new.
 - `local_index` — stats, clear, prune and vacuum for the local index.
 - `list_engines` — engine catalogue with tiers, key requirements and live health.
 
-**Engines (25)**
+**Engines (24)**
 
 - Primary keyless defaults: DuckDuckGo (HTML with lite fallback), Mojeek, Google News RSS.
 - Fallback keyless: Bing, Baidu, Sogou, 360.

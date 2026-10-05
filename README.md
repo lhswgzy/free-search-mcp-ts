@@ -65,7 +65,7 @@ Every tool accepts `format: "json"` for callers that want to post-process the ou
 
 ## Engines
 
-Twenty-five engines, in tiers. The tier decides when an engine runs; you can always override with `engines: ["bing", "wikipedia"]` or ask for everything with `engines: ["all"]`.
+Twenty-four engines, in tiers. The tier decides when an engine runs; you can always override with `engines: ["bing", "wikipedia"]` or ask for everything with `engines: ["all"]`.
 
 ### Primary — the documented keyless defaults
 
@@ -244,6 +244,17 @@ npm run build          # tsc -> dist/
 npm test               # vitest
 npm run typecheck
 node dist/cli.js doctor
+```
+
+`npm run verify` runs the whole acceptance sequence — typecheck, build, the test
+suite, both MCP protocol probes, the CLI surface and a packaging leak check — and
+prints one summary. `npm run verify:online` additionally performs a live search,
+fetch and engine sweep. The two protocol probes are standalone scripts, so you
+can also check a build directly:
+
+```bash
+node scripts/probe-stdio.mjs     # speaks MCP over stdio like a client does
+node scripts/probe-http.mjs      # exercises the streamable-HTTP transport
 ```
 
 Layout:

@@ -1,0 +1,69 @@
+<!doctype html>
+<!--
+  Authored fixture: a focused excerpt of a documentation-style article.
+
+  `article-mdn.html` (the full 150 kB capture) proves the pipeline against a real
+  page but has no `<pre><code class="language-…">` block, so this small,
+  hand-written excerpt carries exactly the constructs the Markdown converter has
+  custom rules for: a relative `href` that must be absolutised, a GFM table, a
+  fenced code block with a language tag, an image, and the navigation / footer /
+  cookie-banner chrome that must be dropped.
+-->
+<html lang="en">
+  <head>
+    <title>Fetching data - Example Docs</title>
+    <meta property="og:site_name" content="Example Docs" />
+    <meta property="og:title" content="Fetching data" />
+    <meta name="author" content="Ada Lovelace" />
+    <meta property="article:published_time" content="2024-03-05T09:30:00Z" />
+    <style>.hidden { display: none; }</style>
+    <script>window.analytics = { track: function () {} };</script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav><a href="/">Home</a> <a href="/about">About us</a> <a href="/pricing">Pricing</a></nav>
+    </header>
+    <div id="cookie-banner" class="cookie">We use cookies to improve your experience. Accept all cookies to continue.</div>
+    <main>
+      <article>
+        <h1>Fetching data</h1>
+        <p>
+          The client talks to a remote endpoint over HTTP and turns the response into a typed object.
+          Requests are retried with backoff, so a transient failure does not surface to the caller, and
+          every response is validated before it reaches application code. This paragraph exists to give
+          the article extractor enough prose to score the page as an article rather than as chrome.
+        </p>
+        <p>
+          Reading the <a href="/docs/quickstart">quickstart guide</a> first is recommended, because the
+          transport layer is configured through environment variables rather than code.
+        </p>
+        <h2>Supported options</h2>
+        <table>
+          <thead>
+            <tr><th>Option</th><th>Type</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>timeoutMs</td><td>number</td><td>15000</td></tr>
+            <tr><td>retries</td><td>number</td><td>1</td></tr>
+          </tbody>
+        </table>
+        <h2>Minimal example</h2>
+        <p>The example below issues one request and prints the parsed body.</p>
+        <pre><code class="language-js">const res = await client.request(url);
+console.log(res.status);</code></pre>
+        <p>
+          Images are kept only when they carry alternative text; tracking pixels and one-pixel spacers are
+          dropped entirely because they add tokens without adding meaning.
+        </p>
+        <p><img src="/img/diagram.png" alt="Request lifecycle diagram" /></p>
+        <p><a href="/blog/read-more">Read more</a></p>
+        <p>Share</p>
+        <p>
+          Finally, the closing paragraph repeats enough ordinary words that Readability keeps the whole
+          body instead of discarding the tail of the document.
+        </p>
+      </article>
+    </main>
+    <footer class="site-footer"><p>© 2024 Example Docs. All rights reserved.</p></footer>
+  </body>
+</html>

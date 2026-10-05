@@ -1,0 +1,41 @@
+<!doctype html>
+<!--
+  Authored fixture: a focused, hand-trimmed Bing SERP slice.
+
+  Bing sometimes serves organic hrefs as its own click tracker
+  (`/ck/a?!&&p=…&u=a1<base64 target>&ver=2`) instead of the plain destination.
+  The captured `bing.html` sample in this directory does not contain any such
+  wrapper, so this small page reproduces the real markup shape (`#b_results >
+  li.b_algo`, `h2 > a`, `.b_caption p`, `.b_attribution`) with wrapped hrefs
+  whose `u=` payloads are genuine base64 of the destinations listed in the
+  tests. It exists purely to prove the engine decodes the wrapper.
+-->
+<html lang="en">
+  <head>
+    <title>state - Search</title>
+  </head>
+  <body>
+    <ol id="b_results">
+      <li class="b_algo">
+        <h2><a href="https://www.bing.com/ck/a?!&amp;&amp;p=8a1f&amp;u=a1aHR0cHM6Ly93d3cuYnJpdGFubmljYS5jb20vdG9waWMvc3RhdGUtc292ZXJlaWduLXBvbGl0aWNhbC1lbnRpdHk%3D&amp;ver=2">State | Definition, History, Figures &amp; Facts</a></h2>
+        <div class="b_caption"><p class="b_lineclamp2">State, political organization of society, or the body politic, or the institutions of government in a sovereign territory.</p></div>
+        <div class="b_attribution"><span>Nov 14, 2024</span></div>
+      </li>
+      <li class="b_algo">
+        <h2><a href="https://www.bing.com/ck/a?!&amp;&amp;p=8a20&amp;u=a1aHR0cHM6Ly9kZXZlbG9wZXIubW96aWxsYS5vcmcvZW4tVVMvZG9jcy9XZWIvQVBJL0ZldGNoX0FQSQ%3D%3D&amp;ver=2">Fetch API - Web APIs | MDN</a></h2>
+        <div class="b_caption"><p class="b_lineclamp2">The Fetch API provides an interface for fetching resources across the network, including requests and responses.</p></div>
+        <div class="b_attribution"><span>Jun 8, 2026</span></div>
+      </li>
+      <li class="b_algo">
+        <h2><a href="https://www.bing.com/ck/a?!&amp;&amp;p=8a21&amp;u=a1aHR0cHM6Ly9tb2RlbGNvbnRleHRwcm90b2NvbC5pby9kb2NzL2dldHRpbmctc3RhcnRlZC9pbnRybw%3D%3D&amp;ver=2">Getting started - Model Context Protocol</a></h2>
+        <div class="b_caption"><p class="b_lineclamp2">An introduction to the Model Context Protocol, the open standard for connecting AI applications to external systems.</p></div>
+        <div class="b_attribution"><span>Jul 28, 2026</span></div>
+      </li>
+      <li class="b_algo">
+        <h2><a href="https://www.bing.com/ck/a?!&amp;&amp;p=8a22&amp;u=a1aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvTW9kZWxfQ29udGV4dF9Qcm90b2NvbA%3D%3D&amp;ver=2">Model Context Protocol - Wikipedia</a></h2>
+        <div class="b_caption"><p class="b_lineclamp2">The Model Context Protocol is an open standard introduced by Anthropic in November 2024 for tool use.</p></div>
+        <div class="b_attribution"><span>Oct 1, 2026</span></div>
+      </li>
+    </ol>
+  </body>
+</html>

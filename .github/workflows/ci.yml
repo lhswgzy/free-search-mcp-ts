@@ -49,13 +49,24 @@ jobs:
           FREE_SEARCH_DATA_DIR: ${{ runner.temp }}/free-search-mcp-ci
           FREE_SEARCH_LOG_LEVEL: error
 
-      - name: Smoke test the CLI
+      - name: CLI smoke test
         run: |
           node dist/cli.js --version
           node dist/cli.js tools
           node dist/cli.js clients
+          node dist/cli.js cache stats
         env:
           FREE_SEARCH_DATA_DIR: ${{ runner.temp }}/free-search-mcp-ci
+          FREE_SEARCH_LOG_LEVEL: error
+
+      # The two protocol probes are the only checks that prove the built server
+      # is usable by a real client. They are plain Node and need no network for
+      # the protocol assertions themselves.
+      - name: MCP stdio protocol probe
+        run: node scripts/probe-stdio.mjs
+
+      - name: MCP HTTP protocol probe
+        run: node scripts/probe-http.mjs
 
   package:
     name: Package

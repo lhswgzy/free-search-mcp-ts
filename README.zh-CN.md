@@ -65,7 +65,7 @@ npx -y free-search-mcp install --dry-run
 
 ## 引擎
 
-共 25 个引擎,分层调度。层级决定它何时运行;你也可以用 `engines: ["bing", "wikipedia"]` 指定,或 `engines: ["all"]` 全部启用。
+共 24 个引擎,分层调度。层级决定它何时运行;你也可以用 `engines: ["bing", "wikipedia"]` 指定,或 `engines: ["all"]` 全部启用。
 
 ### 主层 —— 文档中承诺的无密钥默认组合
 
