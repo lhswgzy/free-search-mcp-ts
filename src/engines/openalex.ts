@@ -106,7 +106,7 @@ export function createOpenAlexEngine({ http, config }: EngineDeps): SearchEngine
         search: query,
         'per-page': String(Math.min(Math.max(options.limit, 1), 200)),
         // Joins OpenAlex's polite pool; not a key and not required.
-        mailto: 'free-search-mcp@users.noreply.github.com',
+        mailto: 'lhswgzy@users.noreply.github.com',
       });
       const fromDate = freshnessCutoff(options.freshness);
       if (fromDate) params.set('filter', `from_publication_date:${fromDate}`);

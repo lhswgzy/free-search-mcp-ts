@@ -102,7 +102,7 @@ try {
   check('/health reports the tool count and endpoint', health.status === 'ok' && health.tools === 8 && health.endpoint === '/mcp', JSON.stringify(health));
 
   const root = await fetch(`${base}/`);
-  check('GET / serves a status page', root.status === 200 && (await root.text()).includes('free-search-mcp'));
+  check('GET / serves a status page', root.status === 200 && (await root.text()).includes('free-search-mcp-ts'));
 
   const preflight = await fetch(`${base}/mcp`, { method: 'OPTIONS' });
   check('OPTIONS /mcp answers a CORS preflight', preflight.status === 204, `allow-origin: ${preflight.headers.get('access-control-allow-origin')}`);
@@ -113,9 +113,9 @@ try {
   const init = await rpc('initialize', {
     protocolVersion: '2025-06-18',
     capabilities: {},
-    clientInfo: { name: 'free-search-mcp-probe', version: '1.0.0' },
+    clientInfo: { name: 'free-search-mcp-ts-probe', version: '1.0.0' },
   }, 1);
-  check('initialize over HTTP', init.payload?.result?.serverInfo?.name === 'free-search-mcp', init.payload?.result?.serverInfo?.name ?? JSON.stringify(init.payload).slice(0, 100));
+  check('initialize over HTTP', init.payload?.result?.serverInfo?.name === 'free-search-mcp-ts', init.payload?.result?.serverInfo?.name ?? JSON.stringify(init.payload).slice(0, 100));
 
   const session = init.sessionId;
 

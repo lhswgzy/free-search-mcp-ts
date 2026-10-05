@@ -9,7 +9,7 @@
  *      instant and, more importantly, stops us hammering providers.
  *
  * `node:sqlite` is used rather than `better-sqlite3` on purpose: it ships with
- * Node, so the whole package stays pure JavaScript and `npx free-search-mcp`
+ * Node, so the whole package stays pure JavaScript and `npx free-search-mcp-ts`
  * never has to compile a native addon. When `node:sqlite` is unavailable the
  * cache silently degrades to an in-process LRU — nothing else changes.
  */

@@ -17,7 +17,7 @@ import { existsSync, mkdirSync, copyFileSync, readFileSync, writeFileSync } from
 import { homedir, platform as osPlatform } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 
-export const DEFAULT_SERVER_NAME = 'free-search-mcp';
+export const DEFAULT_SERVER_NAME = 'free-search-mcp-ts';
 
 /** Environment variables worth forwarding into the client's config. */
 export const FORWARDED_ENV_KEYS = [
@@ -116,7 +116,7 @@ export const CLIENT_SPECS: readonly ClientSpec[] = [
     shape: 'standard',
     docs: 'https://docs.claude.com/en/docs/claude-code/mcp',
     paths: (ctx) => [join(ctx.home, '.claude.json')],
-    note: 'Equivalent to running: claude mcp add free-search-mcp -- npx -y free-search-mcp',
+    note: 'Equivalent to running: claude mcp add free-search-mcp-ts -- npx -y free-search-mcp-ts',
   },
   {
     id: 'cursor',
@@ -192,7 +192,7 @@ export const CLIENT_SPECS: readonly ClientSpec[] = [
     shape: 'toml',
     docs: 'https://github.com/openai/codex',
     paths: (ctx) => [join(ctx.home, '.codex', 'config.toml')],
-    note: 'Equivalent to running: codex mcp add free-search-mcp -- npx -y free-search-mcp',
+    note: 'Equivalent to running: codex mcp add free-search-mcp-ts -- npx -y free-search-mcp-ts',
   },
   {
     id: 'gemini-cli',
@@ -239,7 +239,7 @@ export const CLIENT_SPECS: readonly ClientSpec[] = [
     docs: 'https://docs.openwebui.com/openapi-servers/mcp',
     paths: () => [],
     manual:
-      'Ollama itself does not speak MCP: the tool-calling loop has to live in the client. Point an MCP-capable front end at this server instead — run `free-search-mcp serve --transport http --port 8765` and add http://127.0.0.1:8765/mcp as a streamable-HTTP MCP server in Open WebUI (Settings → Tools → MCP), LibreChat, or any other MCP-aware UI. The same HTTP endpoint works from a container or another machine on your network.',
+      'Ollama itself does not speak MCP: the tool-calling loop has to live in the client. Point an MCP-capable front end at this server instead — run `free-search-mcp-ts serve --transport http --port 8765` and add http://127.0.0.1:8765/mcp as a streamable-HTTP MCP server in Open WebUI (Settings → Tools → MCP), LibreChat, or any other MCP-aware UI. The same HTTP endpoint works from a container or another machine on your network.',
   },
 ] as const;
 
@@ -361,7 +361,7 @@ export interface ResolveEntryOptions {
  * started from a real installation (a global install or a project dependency),
  * because that survives cache cleanup; when running from an `npx` cache — which
  * can be garbage-collected — it emits the conventional
- * `npx -y free-search-mcp` instead.
+ * `npx -y free-search-mcp-ts` instead.
  */
 export function resolveServerEntry(options: ResolveEntryOptions = {}): ServerEntry {
   const env = collectEnv(options.sourceEnv ?? process.env, options.env);
@@ -374,7 +374,7 @@ export function resolveServerEntry(options: ResolveEntryOptions = {}): ServerEnt
   const cliPath = options.cliPath ?? process.argv[1];
   const mode = options.mode ?? 'auto';
   const looksTransient = !!cliPath && /(_npx|npm-cache|_cacache|\.npm[\\/]_npx)/i.test(cliPath);
-  const looksInstalled = !!cliPath && /node_modules[\\/](free-search-mcp|@[\w-]+[\\/]free-search-mcp)[\\/]/i.test(cliPath);
+  const looksInstalled = !!cliPath && /node_modules[\\/](free-search-mcp-ts|@[\w-]+[\\/]free-search-mcp-ts)[\\/]/i.test(cliPath);
 
   const useNode = mode === 'node' || (mode === 'auto' && looksInstalled && !looksTransient);
 

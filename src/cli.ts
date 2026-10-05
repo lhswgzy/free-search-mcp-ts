@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /**
- * `free-search-mcp` command line.
+ * `free-search-mcp-ts` command line.
  *
  * With no arguments it serves MCP over stdio, which is what a client does when
- * it runs `npx -y free-search-mcp` — that default is load-bearing, so every
+ * it runs `npx -y free-search-mcp-ts` — that default is load-bearing, so every
  * other behaviour is behind an explicit subcommand.
  *
  * The subcommands are not a wrapper around the server: they construct the same
- * `Services` object and call the same tool handlers. `free-search-mcp search`
+ * `Services` object and call the same tool handlers. `free-search-mcp-ts search`
  * is therefore a genuine end-to-end test of what a model would get.
  */
 
@@ -142,10 +142,10 @@ function flagList(args: ParsedArgs, key: string): string[] {
  * ------------------------------------------------------------------ */
 
 const HELP = `
-free-search-mcp ${SERVER_VERSION} — local-first, key-free web search for MCP clients
+free-search-mcp-ts ${SERVER_VERSION} — local-first, key-free web search for MCP clients
 
 USAGE
-  npx -y free-search-mcp [command] [options]
+  npx -y free-search-mcp-ts [command] [options]
 
   With no command the server speaks MCP over stdio, which is what a client
   expects when it spawns this binary.
@@ -179,12 +179,12 @@ COMMON OPTIONS
   -v, --version             Version
 
 EXAMPLES
-  npx -y free-search-mcp install
-  npx -y free-search-mcp install --client cursor --dry-run
-  npx -y free-search-mcp search "rust async runtime comparison" --max 8
-  npx -y free-search-mcp research "state of MCP adoption" --depth 3 --json
-  npx -y free-search-mcp serve --transport http --port 8765
-  npx -y free-search-mcp doctor
+  npx -y free-search-mcp-ts install
+  npx -y free-search-mcp-ts install --client cursor --dry-run
+  npx -y free-search-mcp-ts search "rust async runtime comparison" --max 8
+  npx -y free-search-mcp-ts research "state of MCP adoption" --depth 3 --json
+  npx -y free-search-mcp-ts serve --transport http --port 8765
+  npx -y free-search-mcp-ts doctor
 
 ENVIRONMENT
   FREE_SEARCH_ENGINES       Comma-separated engine ids, or "auto" (default)
@@ -314,7 +314,7 @@ export async function main(argv: readonly string[] = process.argv.slice(2)): Pro
       out(HELP.trimStart());
       return;
     default:
-      fail(`Unknown command "${args.command}".\nRun \`free-search-mcp --help\` for the list.`);
+      fail(`Unknown command "${args.command}".\nRun \`free-search-mcp-ts --help\` for the list.`);
   }
 }
 
@@ -342,7 +342,7 @@ async function commandServe(args: ParsedArgs, config: Config): Promise<void> {
       path,
       corsOrigin: flagString(args, 'cors') ?? '*',
     });
-    process.stderr.write(`free-search-mcp listening on ${running.url}\n`);
+    process.stderr.write(`free-search-mcp-ts listening on ${running.url}\n`);
     if (flagBool(args, 'print')) printJson({ url: running.url, transport: 'streamable-http', tools: TOOLS.length });
     const shutdown = async (): Promise<void> => {
       await running.close();
@@ -437,12 +437,12 @@ function commandClients(args: ParsedArgs): void {
     out(`| \`${entry.spec.id}\` | ${entry.spec.label} | \`${entry.path}\` | ${entry.exists ? 'yes' : 'no'} |`);
   }
   out('');
-  out('Register with: `free-search-mcp install --client <id>` (repeat the flag for several).');
+  out('Register with: `free-search-mcp-ts install --client <id>` (repeat the flag for several).');
   out('');
   out('## Clients that cannot be configured from a file');
   out('');
   out(
-    '- **Ollama / Open WebUI** — Ollama does not speak MCP itself. Run `free-search-mcp serve --transport http --port 8765` and add `http://127.0.0.1:8765/mcp` as a streamable-HTTP MCP server in an MCP-aware front end (Open WebUI, LibreChat, …).',
+    '- **Ollama / Open WebUI** — Ollama does not speak MCP itself. Run `free-search-mcp-ts serve --transport http --port 8765` and add `http://127.0.0.1:8765/mcp` as a streamable-HTTP MCP server in an MCP-aware front end (Open WebUI, LibreChat, …).',
   );
 }
 
@@ -517,14 +517,14 @@ async function commandDoctor(args: ParsedArgs, config: Config): Promise<void> {
   checks.push({
     name: 'MCP clients detected',
     ok: true,
-    detail: detected.length ? detected.map((c) => c.spec.id).join(', ') : 'none — run `free-search-mcp clients`',
+    detail: detected.length ? detected.map((c) => c.spec.id).join(', ') : 'none — run `free-search-mcp-ts clients`',
   });
 
   const registered: string[] = [];
   for (const entry of detected) {
     try {
       const text = await readFile(entry.path, 'utf8');
-      if (text.includes('free-search-mcp')) registered.push(entry.spec.id);
+      if (text.includes('free-search-mcp-ts')) registered.push(entry.spec.id);
     } catch {
       /* an unreadable config is not a doctor failure */
     }
@@ -532,7 +532,7 @@ async function commandDoctor(args: ParsedArgs, config: Config): Promise<void> {
   checks.push({
     name: 'Registered clients',
     ok: registered.length ? true : 'warn',
-    detail: registered.length ? registered.join(', ') : 'not registered anywhere yet — run `free-search-mcp install`',
+    detail: registered.length ? registered.join(', ') : 'not registered anywhere yet — run `free-search-mcp-ts install`',
   });
 
   if (flagBool(args, 'json')) {
@@ -541,7 +541,7 @@ async function commandDoctor(args: ParsedArgs, config: Config): Promise<void> {
     return;
   }
 
-  out('# free-search-mcp doctor');
+  out('# free-search-mcp-ts doctor');
   out('');
   out('| Check | Result | Detail |');
   out('|-------|--------|--------|');
@@ -566,7 +566,7 @@ async function commandDoctor(args: ParsedArgs, config: Config): Promise<void> {
 
   const failures = checks.filter((c) => c.ok === false);
   if (failures.length === 0) {
-    out('Everything looks good. Try `free-search-mcp search "model context protocol"`.');
+    out('Everything looks good. Try `free-search-mcp-ts search "model context protocol"`.');
   } else {
     out(`${plural(failures.length, 'check')} failed. Fix those before relying on the server.`);
   }
@@ -626,7 +626,7 @@ async function sweepEngines(
 
 async function commandSearch(args: ParsedArgs, config: Config): Promise<void> {
   const query = args.positionals.join(' ').trim();
-  if (!query) fail('Usage: free-search-mcp search "<query>" [--max 12] [--engines duckduckgo,bing]');
+  if (!query) fail('Usage: free-search-mcp-ts search "<query>" [--max 12] [--engines duckduckgo,bing]');
   const services = createServices(config);
 
   const tool = getTool('web_search')!;
@@ -653,7 +653,7 @@ async function commandSearch(args: ParsedArgs, config: Config): Promise<void> {
 
 async function commandResearch(args: ParsedArgs, config: Config): Promise<void> {
   const query = args.positionals.join(' ').trim();
-  if (!query) fail('Usage: free-search-mcp research "<question>" [--depth 2] [--sources 8]');
+  if (!query) fail('Usage: free-search-mcp-ts research "<question>" [--depth 2] [--sources 8]');
   const services = createServices(config);
 
   const tool = getTool('research')!;
@@ -690,7 +690,7 @@ async function commandResearch(args: ParsedArgs, config: Config): Promise<void> 
 
 async function commandFetch(args: ParsedArgs, config: Config): Promise<void> {
   const url = args.positionals[0];
-  if (!url) fail('Usage: free-search-mcp fetch <url> [--max-chars 40000] [--offset 0] [--links]');
+  if (!url) fail('Usage: free-search-mcp-ts fetch <url> [--max-chars 40000] [--offset 0] [--links]');
   const services = createServices(config);
   const tool = getTool('fetch_url')!;
   const result = await tool.handler(
@@ -710,7 +710,7 @@ async function commandFetch(args: ParsedArgs, config: Config): Promise<void> {
 
 async function commandParse(args: ParsedArgs, config: Config): Promise<void> {
   const path = args.positionals[0];
-  if (!path) fail('Usage: free-search-mcp parse <file> [--sheet "Sheet1"] [--max-chars 40000]');
+  if (!path) fail('Usage: free-search-mcp-ts parse <file> [--sheet "Sheet1"] [--max-chars 40000]');
   const services = createServices(config);
   const tool = getTool('parse_document')!;
   const result = await tool.handler(
@@ -786,7 +786,7 @@ function commandCache(args: ParsedArgs, config: Config): void {
     }
     case 'search': {
       const query = args.positionals.slice(1).join(' ');
-      if (!query) fail('Usage: free-search-mcp cache search "<query>"');
+      if (!query) fail('Usage: free-search-mcp-ts cache search "<query>"');
       const hits = cache.searchPages(query, flagNumber(args, 'max') ?? 10);
       if (flagBool(args, 'json')) {
         printJson(hits);
@@ -943,7 +943,7 @@ if (invokedDirectly()) {
   main().catch((err: unknown) => {
     // A crash must not look like a protocol error to the client.
     process.stderr.write(
-      `free-search-mcp failed: ${err instanceof Error ? (err.stack ?? err.message) : String(err)}\n`,
+      `free-search-mcp-ts failed: ${err instanceof Error ? (err.stack ?? err.message) : String(err)}\n`,
     );
     resetDispatcher();
     closeCache();

@@ -35,7 +35,7 @@ import { cap, fetchJson, parseDateLoose, type EngineDeps } from './kit.js';
  * crates.io blocks generic user agents; this identifies the tool and links to
  * its repository so the registry can contact us instead of blackholing us.
  */
-export const CRATES_USER_AGENT = 'free-search-mcp/0.1.0 (+https://github.com/sweetcornna/free-search-mcp)';
+export const CRATES_USER_AGENT = 'free-search-mcp-ts/0.1.0 (+https://github.com/lhswgzy/free-search-mcp-ts)';
 
 interface CratesResponse {
   crates?: CrateRecord[];

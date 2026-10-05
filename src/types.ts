@@ -1,5 +1,5 @@
 /**
- * Shared type definitions for free-search-mcp.
+ * Shared type definitions for free-search-mcp-ts.
  *
  * Everything here is transport-agnostic: engines, the fusion layer, the cache
  * and the tool handlers all speak these shapes so that any of them can be

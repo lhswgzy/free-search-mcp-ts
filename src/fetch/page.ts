@@ -57,7 +57,7 @@ export class FetchService {
     private readonly config: Config,
     private readonly http: HttpClient = createHttpClient(config),
   ) {
-    this.robots = new RobotsCache(this.http, config, config.userAgent ?? 'free-search-mcp/0.1.0');
+    this.robots = new RobotsCache(this.http, config, config.userAgent ?? 'free-search-mcp-ts/0.1.0');
   }
 
   /**

@@ -27,7 +27,7 @@ function stubConfig(overrides: Partial<Config> = {}): Config {
     concurrency: 6,
     maxFetchBytes: 5 * 1024 * 1024,
     maxMarkdownChars: 12_000,
-    userAgent: 'free-search-mcp-test/0.0.0',
+    userAgent: 'free-search-mcp-ts-test/0.0.0',
     rotateUserAgent: false,
     proxy: undefined,
     cacheEnabled: false,
@@ -143,8 +143,8 @@ describe('parseRobotsTxt and isPathAllowed', () => {
   });
 
   it('selects a specific user-agent group over the wildcard group', () => {
-    const text = ['User-agent: *', 'Disallow: /', '', 'User-agent: free-search-mcp', 'Disallow: /blocked'].join('\n');
-    const ours = parseRobotsTxt(text, 'free-search-mcp/0.1.0');
+    const text = ['User-agent: *', 'Disallow: /', '', 'User-agent: free-search-mcp-ts', 'Disallow: /blocked'].join('\n');
+    const ours = parseRobotsTxt(text, 'free-search-mcp-ts/0.1.0');
     expect(ours.rules).toHaveLength(1);
     expect(isPathAllowed(ours, '/anywhere')).toBe(true);
     expect(isPathAllowed(ours, '/blocked')).toBe(false);
@@ -191,7 +191,7 @@ describe('RobotsCache', () => {
     const http = createStub([
       { match: '/robots.txt', body: 'User-agent: *\nDisallow: /hidden\nCrawl-delay: 5', contentType: 'text/plain' },
     ]);
-    const cache = new RobotsCache(http, stubConfig(), 'free-search-mcp/0.1.0');
+    const cache = new RobotsCache(http, stubConfig(), 'free-search-mcp-ts/0.1.0');
 
     const blocked = await cache.check('https://example.com/hidden/page', { respect: true });
     expect(blocked.allowed).toBe(false);

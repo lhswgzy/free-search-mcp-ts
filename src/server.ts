@@ -4,7 +4,7 @@
  * Two transports are supported:
  *
  *   - **stdio** (default) — what every MCP client expects when it spawns
- *     `npx -y free-search-mcp`. Nothing but JSON-RPC may touch stdout, so all
+ *     `npx -y free-search-mcp-ts`. Nothing but JSON-RPC may touch stdout, so all
  *     diagnostics go to stderr.
  *   - **streamable HTTP** — for clients that cannot spawn a process (web UIs,
  *     containerised agents, a shared instance on localhost). Stateless: one
@@ -25,7 +25,7 @@ import { createLogger } from './util/logger.js';
 
 const log = createLogger('server');
 
-export const SERVER_NAME = 'free-search-mcp';
+export const SERVER_NAME = 'free-search-mcp-ts';
 export const SERVER_VERSION = '0.1.0';
 
 /** Build an `McpServer` with every tool registered. */
@@ -34,8 +34,8 @@ export function createMcpServer(services: Services): McpServer {
     {
       name: SERVER_NAME,
       version: SERVER_VERSION,
-      title: 'free-search-mcp',
-      websiteUrl: 'https://github.com/sweetcornna/free-search-mcp',
+      title: 'free-search-mcp-ts',
+      websiteUrl: 'https://github.com/lhswgzy/free-search-mcp-ts',
     },
     {
       capabilities: { tools: {} },
@@ -164,9 +164,9 @@ export async function runHttpServer(services: Services, options: HttpServerOptio
 
     if (req.method === 'GET' && (url.pathname === '/' || url.pathname === '/index.html')) {
       res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }).end(
-        `<!doctype html><meta charset="utf-8"><title>free-search-mcp</title>
+        `<!doctype html><meta charset="utf-8"><title>free-search-mcp-ts</title>
 <body style="font-family:ui-sans-serif,system-ui,sans-serif;max-width:44rem;margin:3rem auto;line-height:1.6">
-<h1>free-search-mcp</h1>
+<h1>free-search-mcp-ts</h1>
 <p>Running. Model Context Protocol endpoint: <code>${mcpPath}</code> (streamable HTTP, stateless).</p>
 <p>${TOOLS.length} tools available: ${TOOLS.map((t) => `<code>${t.name}</code>`).join(', ')}.</p>
 <p>Health: <a href="/health"><code>/health</code></a></p>
@@ -238,7 +238,7 @@ export function createStdioServer(config: Config): McpServer {
   return createMcpServer(createServices(config));
 }
 
-/** JSON schema snapshot of every tool, exposed by `free-search-mcp tools --json`. */
+/** JSON schema snapshot of every tool, exposed by `free-search-mcp-ts tools --json`. */
 export function toolManifest(): Record<string, unknown> {
   return {
     server: { name: SERVER_NAME, version: SERVER_VERSION },

@@ -46,7 +46,7 @@ jobs:
         run: npm test
         env:
           # Keep the suite offline and isolated from any developer config.
-          FREE_SEARCH_DATA_DIR: ${{ runner.temp }}/free-search-mcp-ci
+          FREE_SEARCH_DATA_DIR: ${{ runner.temp }}/free-search-mcp-ts-ci
           FREE_SEARCH_LOG_LEVEL: error
 
       - name: CLI smoke test
@@ -56,7 +56,7 @@ jobs:
           node dist/cli.js clients
           node dist/cli.js cache stats
         env:
-          FREE_SEARCH_DATA_DIR: ${{ runner.temp }}/free-search-mcp-ci
+          FREE_SEARCH_DATA_DIR: ${{ runner.temp }}/free-search-mcp-ts-ci
           FREE_SEARCH_LOG_LEVEL: error
 
       # The two protocol probes are the only checks that prove the built server

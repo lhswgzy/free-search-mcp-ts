@@ -79,7 +79,7 @@ describe('documentation matches the implementation', () => {
   it('documents only CLI subcommands the switch actually handles', () => {
     const cliSource = read('src/cli.ts');
     const documented = new Set<string>();
-    for (const match of README.matchAll(/^free-search-mcp\s+([a-z]+)/gm)) documented.add(match[1]!);
+    for (const match of README.matchAll(/^free-search-mcp-ts\s+([a-z]+)/gm)) documented.add(match[1]!);
     expect(documented.size).toBeGreaterThan(8);
     const unhandled = [...documented].filter((command) => !new RegExp(`case '${command}':`).test(cliSource));
     expect(unhandled, `README documents commands the CLI does not handle: ${unhandled.join(', ')}`).toEqual([]);

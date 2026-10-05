@@ -2,12 +2,12 @@
 
 ## Reporting a vulnerability
 
-Open a [private security advisory](https://github.com/sweetcornna/free-search-mcp/security/advisories/new)
+Open a [private security advisory](https://github.com/lhswgzy/free-search-mcp-ts/security/advisories/new)
 rather than a public issue. Please include the version, the platform, and the smallest reproduction you can manage.
 
 ## Threat model
 
-`free-search-mcp` runs as a local process with your user's privileges, spawned by an MCP client. Two
+`free-search-mcp-ts` runs as a local process with your user's privileges, spawned by an MCP client. Two
 properties of that arrangement drive every decision below:
 
 1. **Its inputs are model-generated.** `fetch_url` and `parse_document` take URLs and paths chosen by a

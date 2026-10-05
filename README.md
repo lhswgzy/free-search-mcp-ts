@@ -1,16 +1,18 @@
-# free-search-mcp
+# free-search-mcp-ts
 
 **Local-first web search, page fetching and document parsing for any MCP client — with no API key.**
 
-`free-search-mcp` is a [Model Context Protocol](https://modelcontextprotocol.io) server that gives Claude, GPT, Cursor, Codex, local Ollama front ends and any other MCP-capable client the ability to search the web, read pages and parse documents. It runs entirely on your machine, needs no account, and returns Markdown instead of JSON because Markdown costs a model roughly a third fewer tokens for the same information.
+> **Provenance.** This is an independent **TypeScript** implementation of the same idea. The original and
+> more mature **Python** project lives at [sweetcornna/free-search-mcp](https://github.com/sweetcornna/free-search-mcp)
+> and is published on PyPI as `free-search-mcp`. The two are unrelated codebases by different authors:
+> this one is not a fork of it and does not claim parity with it.
 
-One command installs it and registers it with the clients it finds:
+`free-search-mcp-ts` is a [Model Context Protocol](https://modelcontextprotocol.io) server that gives Claude, GPT, Cursor, Codex, local Ollama front ends and any other MCP-capable client the ability to search the web, read pages and parse documents. It runs entirely on your machine, needs no account, and returns Markdown instead of JSON because Markdown costs a model roughly a third fewer tokens for the same information.
 
-```bash
-npx -y free-search-mcp install
-```
+**Not on npm yet.** `npx -y free-search-mcp-ts` will install it once the package is published; until then
+use the [Quick start](#quick-start), which builds it locally in four commands.
 
-[![CI](https://github.com/sweetcornna/free-search-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/sweetcornna/free-search-mcp/actions/workflows/ci.yml)
+[![CI](https://github.com/lhswgzy/free-search-mcp-ts/actions/workflows/ci.yml/badge.svg)](https://github.com/lhswgzy/free-search-mcp-ts/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D20.19-brightgreen.svg)](https://nodejs.org)
 
@@ -30,22 +32,38 @@ This server takes a different position:
 
 ## Quick start
 
+This is the fastest path that works today. It needs no npm publication, because it builds the package
+from source and links the `free-search-mcp-ts` binary into your PATH:
+
 ```bash
-# 1. Register the server with the MCP clients installed on this machine
-npx -y free-search-mcp install
-
-# 2. Confirm the engines and network work from here
-npx -y free-search-mcp doctor
-
-# 3. Try it without involving a client at all
-npx -y free-search-mcp search "state of the art in retrieval augmented generation"
-npx -y free-search-mcp research "how does reciprocal rank fusion work" --depth 2
+git clone https://github.com/lhswgzy/free-search-mcp-ts
+cd free-search-mcp-ts
+npm install && npm run build && npm link
+free-search-mcp-ts install
 ```
 
-Restart your client afterwards. If you would rather see what the installer would do before it touches anything:
+That registers the server with the MCP clients installed on this machine. Then confirm the engines and
+network work from here, and try it without involving a client at all:
 
 ```bash
-npx -y free-search-mcp install --dry-run
+free-search-mcp-ts doctor
+free-search-mcp-ts search "state of the art in retrieval augmented generation"
+free-search-mcp-ts research "how does reciprocal rank fusion work" --depth 2
+```
+
+Restart your client afterwards. If you would rather see what the installer would do before it touches
+anything, `free-search-mcp-ts install --dry-run` prints the plan without writing.
+
+### Once the package is published to npm
+
+`npx -y free-search-mcp-ts` is the intended path for anyone who does not want a local clone, but the
+package is not on npm yet. Once it is, every command above becomes:
+
+```bash
+npx -y free-search-mcp-ts install
+npx -y free-search-mcp-ts doctor
+npx -y free-search-mcp-ts search "state of the art in retrieval augmented generation"
+npx -y free-search-mcp-ts install --dry-run
 ```
 
 ## Tools exposed to the model
@@ -97,8 +115,8 @@ A question about a Rust crate quietly gains crates.io; a question containing an 
 | `brave-api`, `serper`, `tavily`, `exa`, `google-cse` | Optional API-key engines. When a key is present they join the first tier and get a higher RRF weight, because a documented JSON API beats a scraper. |
 
 ```bash
-BRAVE_API_KEY=... npx -y free-search-mcp search "..."      # or SERPER_API_KEY, TAVILY_API_KEY, EXA_API_KEY
-SEARXNG_URL=https://searx.example.org npx -y free-search-mcp search "..."
+BRAVE_API_KEY=... npx -y free-search-mcp-ts search "..."      # or SERPER_API_KEY, TAVILY_API_KEY, EXA_API_KEY
+SEARXNG_URL=https://searx.example.org npx -y free-search-mcp-ts search "..."
 ```
 
 ## How it works
@@ -123,11 +141,11 @@ SEARXNG_URL=https://searx.example.org npx -y free-search-mcp search "..."
 | Fetching a page returns far less than the raw HTML | MDN's Fetch API page: 150 kB of HTML → **5.4 kB** of Markdown (**96 %** smaller, ~38,300 → ~1,378 estimated tokens). Bing's and Baidu's result pages measure 97 % and 99 %. |
 | The circuit breaker pays for itself | On a network where DuckDuckGo and Google News are unreachable: first search **11.9 s**, subsequently **1.3 s**, because the dead engines are benched in between. |
 
-Reproduce the first two with `npx tsx scripts/measure-savings.mts`; the third with two consecutive `free-search-mcp search` calls.
+Reproduce the first two with `npx tsx scripts/measure-savings.mts`; the third with two consecutive `free-search-mcp-ts search` calls.
 
 ## Clients
 
-`free-search-mcp install` detects and patches the following. Only clients whose config file already exists are touched, every write is preceded by a `.bak` copy, and only the one key the server owns is modified.
+`free-search-mcp-ts install` detects and patches the following. Only clients whose config file already exists are touched, every write is preceded by a `.bak` copy, and only the one key the server owns is modified.
 
 | Client | Config file |
 |--------|-------------|
@@ -146,40 +164,40 @@ Reproduce the first two with `npx tsx scripts/measure-savings.mts`; the third wi
 | Continue | `~/.continue/config.json` |
 
 ```bash
-npx -y free-search-mcp clients                          # every supported client id
-npx -y free-search-mcp install --client cursor --dry-run
-npx -y free-search-mcp install --client claude-desktop,codex
-npx -y free-search-mcp uninstall --client cursor
+npx -y free-search-mcp-ts clients                          # every supported client id
+npx -y free-search-mcp-ts install --client cursor --dry-run
+npx -y free-search-mcp-ts install --client claude-desktop,codex
+npx -y free-search-mcp-ts uninstall --client cursor
 ```
 
 **Ollama does not speak MCP.** The tool-calling loop has to live in the client, so point an MCP-aware front end at this server instead — run it over HTTP and add it in Open WebUI, LibreChat or any other MCP-capable UI:
 
 ```bash
-free-search-mcp serve --transport http --port 8765
+free-search-mcp-ts serve --transport http --port 8765
 # then add http://127.0.0.1:8765/mcp as a streamable-HTTP MCP server
 ```
 
 ## Command line
 
 ```
-free-search-mcp                     # serve MCP over stdio (what a client runs)
-free-search-mcp install             # register with the clients found here
-free-search-mcp uninstall           # remove the registration
-free-search-mcp doctor              # check the network, every engine and the local index
-free-search-mcp search  "<query>"   # multi-engine search
-free-search-mcp research "<query>"  # search + read + extract, as a citable brief
-free-search-mcp fetch   <url>       # one page or document as Markdown
-free-search-mcp parse   <file>      # a local document as Markdown
-free-search-mcp engines [--check]   # list engines, tiers and health
-free-search-mcp cache   <stats|search|clear|prune|vacuum|path>
-free-search-mcp config              # the effective configuration
-free-search-mcp tools [--json]      # the MCP tool manifest
-free-search-mcp clients             # supported client ids
+free-search-mcp-ts                     # serve MCP over stdio (what a client runs)
+free-search-mcp-ts install             # register with the clients found here
+free-search-mcp-ts uninstall           # remove the registration
+free-search-mcp-ts doctor              # check the network, every engine and the local index
+free-search-mcp-ts search  "<query>"   # multi-engine search
+free-search-mcp-ts research "<query>"  # search + read + extract, as a citable brief
+free-search-mcp-ts fetch   <url>       # one page or document as Markdown
+free-search-mcp-ts parse   <file>      # a local document as Markdown
+free-search-mcp-ts engines [--check]   # list engines, tiers and health
+free-search-mcp-ts cache   <stats|search|clear|prune|vacuum|path>
+free-search-mcp-ts config              # the effective configuration
+free-search-mcp-ts tools [--json]      # the MCP tool manifest
+free-search-mcp-ts clients             # supported client ids
 ```
 
 Useful flags: `--json`, `--max <n>`, `--engines a,b`, `--freshness day|week|month|year`, `--lang`, `--region`, `--depth 1-3`, `--sources <n>`, `--data-dir <path>`, `--verbose`.
 
-The subcommands call the same handlers the MCP server registers, so `free-search-mcp search "…"` is a genuine end-to-end test of what a model would receive.
+The subcommands call the same handlers the MCP server registers, so `free-search-mcp-ts search "…"` is a genuine end-to-end test of what a model would receive.
 
 ## Configuration
 
@@ -206,10 +224,10 @@ A JSON config file at `~/.free-search-mcp/config.json` accepts the same keys in 
 The server works out of the box on the open internet. If your network filters some providers, either point it at a proxy:
 
 ```bash
-FREE_SEARCH_PROXY=http://127.0.0.1:7890 free-search-mcp search "..."
+FREE_SEARCH_PROXY=http://127.0.0.1:7890 free-search-mcp-ts search "..."
 ```
 
-or leave it alone and let the tiered fallback do its job — the fallback engines were chosen because they are reachable from networks that block DuckDuckGo and Google. `free-search-mcp doctor` prints a per-engine sweep so you can see exactly which engines work from where you are.
+or leave it alone and let the tiered fallback do its job — the fallback engines were chosen because they are reachable from networks that block DuckDuckGo and Google. `free-search-mcp-ts doctor` prints a per-engine sweep so you can see exactly which engines work from where you are.
 
 ## Security and privacy
 
@@ -237,8 +255,8 @@ Honesty about what has been tested matters more than a feature list.
 ## Development
 
 ```bash
-git clone https://github.com/sweetcornna/free-search-mcp
-cd free-search-mcp
+git clone https://github.com/lhswgzy/free-search-mcp-ts
+cd free-search-mcp-ts
 npm install
 npm run build          # tsc -> dist/
 npm test               # vitest

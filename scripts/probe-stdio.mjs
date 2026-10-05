@@ -101,11 +101,11 @@ try {
   const init = await send('initialize', {
     protocolVersion: '2025-06-18',
     capabilities: { roots: { listChanged: false } },
-    clientInfo: { name: 'free-search-mcp-probe', version: '1.0.0' },
+    clientInfo: { name: 'free-search-mcp-ts-probe', version: '1.0.0' },
   });
   const initResult = init.result ?? {};
   check('initialize returns a result', Boolean(init.result));
-  check('serverInfo.name is free-search-mcp', initResult.serverInfo?.name === 'free-search-mcp', initResult.serverInfo?.name);
+  check('serverInfo.name is free-search-mcp-ts', initResult.serverInfo?.name === 'free-search-mcp-ts', initResult.serverInfo?.name);
   check('protocolVersion negotiated', Boolean(initResult.protocolVersion), initResult.protocolVersion);
   check('advertises the tools capability', Boolean(initResult.capabilities?.tools));
   check('ships usage instructions', typeof initResult.instructions === 'string' && initResult.instructions.length > 50, `${initResult.instructions?.length ?? 0} chars`);

@@ -76,4 +76,4 @@ First release. Everything below is new.
 - Measured output cost: Markdown is 32 % fewer tokens than the equivalent JSON for a ten-result search; a fetched page's Markdown is 96–99 % smaller than the raw HTML it came from (mostly content extraction rather than the format itself).
 - Verified against live traffic: Bing, Baidu, Sogou, 360, Hacker News, GitHub, Stack Exchange, npm, crates.io, OpenAlex, Crossref, arXiv. Verified against fixtures only, because the development network cannot reach them: DuckDuckGo, Mojeek, Google News, Startpage, Brave, SearXNG, Wikipedia. See the README's verification status section.
 
-[0.1.0]: https://github.com/sweetcornna/free-search-mcp/releases/tag/v0.1.0
+[0.1.0]: https://github.com/lhswgzy/free-search-mcp-ts/releases/tag/v0.1.0

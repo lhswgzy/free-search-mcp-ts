@@ -6,8 +6,8 @@ most valuable contribution is usually a fixed parser or a new engine.
 ## Getting set up
 
 ```bash
-git clone https://github.com/sweetcornna/free-search-mcp
-cd free-search-mcp
+git clone https://github.com/lhswgzy/free-search-mcp-ts
+cd free-search-mcp-ts
 npm install
 npm run build
 npm test

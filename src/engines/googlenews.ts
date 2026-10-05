@@ -29,7 +29,7 @@ const HOME = 'https://news.google.com/';
  * A feed-reader UA: Google serves the same XML to everyone, but RFC-correct
  * clients are less likely to be rate limited on the RSS path.
  */
-const FEED_USER_AGENT = 'Mozilla/5.0 (compatible; free-search-mcp/0.1; +https://github.com/sweetcornna/free-search-mcp)';
+const FEED_USER_AGENT = 'Mozilla/5.0 (compatible; free-search-mcp-ts/0.1; +https://github.com/lhswgzy/free-search-mcp-ts)';
 
 /** `when:` values understood by Google News, keyed by our freshness levels. */
 const FRESHNESS: Record<string, string> = { day: '1d', week: '7d', month: '30d', year: '1y' };

@@ -1,12 +1,12 @@
 {
-  "name": "free-search-mcp",
+  "name": "free-search-mcp-ts",
   "version": "0.1.0",
   "description": "Local-first, key-free MCP server for web search, page fetching and document parsing. Multi-engine with RRF fusion, SQLite FTS5 cache, Markdown-first output.",
   "license": "MIT",
-  "author": "sweetcornna",
+  "author": "lhswgzy",
   "type": "module",
   "bin": {
-    "free-search-mcp": "dist/cli.js",
+    "free-search-mcp-ts": "dist/cli.js",
     "fsmcp": "dist/cli.js"
   },
   "main": "./dist/index.js",
@@ -87,10 +87,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sweetcornna/free-search-mcp.git"
+    "url": "git+https://github.com/lhswgzy/free-search-mcp-ts.git"
   },
   "bugs": {
-    "url": "https://github.com/sweetcornna/free-search-mcp/issues"
+    "url": "https://github.com/lhswgzy/free-search-mcp-ts/issues"
   },
-  "homepage": "https://github.com/sweetcornna/free-search-mcp#readme"
+  "homepage": "https://github.com/lhswgzy/free-search-mcp-ts#readme"
 }

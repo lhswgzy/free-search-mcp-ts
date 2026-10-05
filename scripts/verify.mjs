@@ -98,7 +98,7 @@ const cli = 'dist/cli.js';
 const dataDir = mkdtempSync(join(tmpdir(), 'fsmcp-verify-'));
 const cliEnv = { FREE_SEARCH_DATA_DIR: dataDir, FREE_SEARCH_LOG_LEVEL: 'error' };
 
-console.log(`\x1b[1mfree-search-mcp acceptance harness\x1b[0m\n  project: ${projectRoot}\n  mode:    ${online ? 'online' : 'offline'}${skipBuild ? ', reusing dist/' : ''}`);
+console.log(`\x1b[1mfree-search-mcp-ts acceptance harness\x1b[0m\n  project: ${projectRoot}\n  mode:    ${online ? 'online' : 'offline'}${skipBuild ? ', reusing dist/' : ''}`);
 
 /* ---------------------------------------------------------------- *
  * 1. Static checks

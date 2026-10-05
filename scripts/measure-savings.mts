@@ -85,7 +85,7 @@ for (const sample of samples) {
   } else {
     try {
       const res = await fetch(sample.url, {
-        headers: { 'user-agent': 'Mozilla/5.0 (compatible; free-search-mcp measurement)' },
+        headers: { 'user-agent': 'Mozilla/5.0 (compatible; free-search-mcp-ts measurement)' },
         signal: AbortSignal.timeout(20_000),
       });
       if (res.ok) html = await res.text();

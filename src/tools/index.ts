@@ -3,7 +3,7 @@
  *
  * One table is the single source of truth: the MCP server registers the schemas
  * from here, and the CLI calls the same handlers directly. That means
- * `free-search-mcp search "..."` on the command line exercises exactly the code
+ * `free-search-mcp-ts search "..."` on the command line exercises exactly the code
  * path a model would, which is the only way a CLI and a server stay honest with
  * each other.
  *

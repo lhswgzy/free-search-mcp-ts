@@ -7,7 +7,7 @@
  * surface for that; anything not re-exported here is internal and may move.
  *
  * ```ts
- * import { createServices, SearchService, loadConfig } from 'free-search-mcp';
+ * import { createServices, SearchService, loadConfig } from 'free-search-mcp-ts';
  *
  * const services = createServices(loadConfig());
  * const outcome = await services.search.search('reciprocal rank fusion');

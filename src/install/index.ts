@@ -1,7 +1,7 @@
 /**
  * Installer orchestration.
  *
- * `free-search-mcp install` detects which MCP clients exist on this machine,
+ * `free-search-mcp-ts install` detects which MCP clients exist on this machine,
  * writes the server entry into each one's config (with a backup), and reports
  * exactly what it changed. `uninstall` reverses it. `doctor` verifies that the
  * server can actually reach the network and its engines.
@@ -42,7 +42,7 @@ const log = createLogger('install');
 export interface InstallOptions {
   /** Client ids to target. Empty means "every detected client". */
   clients?: string[];
-  /** Server name to register under. Default `free-search-mcp`. */
+  /** Server name to register under. Default `free-search-mcp-ts`. */
   name?: string;
   /** How the client should launch the server. */
   mode?: CommandMode;
@@ -212,7 +212,7 @@ function selectTargets(
     for (const id of requested) {
       const spec = getClientSpec(id);
       if (!spec) {
-        log.warn(`unknown client "${id}" — run \`free-search-mcp install --list\` to see the ids`);
+        log.warn(`unknown client "${id}" — run \`free-search-mcp-ts install --list\` to see the ids`);
         continue;
       }
       if (spec.manual) {
@@ -368,11 +368,11 @@ export function formatInstallReport(report: InstallReport): string {
     lines.push('Point the installer at one explicitly, for example:');
     lines.push('');
     lines.push('```bash');
-    lines.push('npx -y free-search-mcp install --client claude-desktop');
-    lines.push('npx -y free-search-mcp install --client cursor');
+    lines.push('npx -y free-search-mcp-ts install --client claude-desktop');
+    lines.push('npx -y free-search-mcp-ts install --client cursor');
     lines.push('```');
     lines.push('');
-    lines.push('Run `npx -y free-search-mcp install --list` to see every supported client id.');
+    lines.push('Run `npx -y free-search-mcp-ts install --list` to see every supported client id.');
     return lines.join('\n');
   }
 
@@ -412,8 +412,8 @@ export function formatInstallReport(report: InstallReport): string {
   lines.push('## Verify');
   lines.push('');
   lines.push('```bash');
-  lines.push('npx -y free-search-mcp doctor      # check engines, network and cache');
-  lines.push('npx -y free-search-mcp search "model context protocol"   # try a real search');
+  lines.push('npx -y free-search-mcp-ts doctor      # check engines, network and cache');
+  lines.push('npx -y free-search-mcp-ts search "model context protocol"   # try a real search');
   lines.push('```');
   return lines.join('\n');
 }

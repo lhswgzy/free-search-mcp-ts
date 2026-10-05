@@ -56,7 +56,7 @@ function occurrences(haystack: string, needle: string): number {
   return haystack.split(needle).length - 1;
 }
 
-const ENTRY: ServerEntry = { command: 'npx', args: ['-y', 'free-search-mcp'], env: { BRAVE_API_KEY: 'secret' } };
+const ENTRY: ServerEntry = { command: 'npx', args: ['-y', 'free-search-mcp-ts'], env: { BRAVE_API_KEY: 'secret' } };
 
 /* ------------------------------------------------------------------ *
  * JSONC parsing
@@ -104,9 +104,9 @@ describe('parseJsonc', () => {
 describe('nested config access', () => {
   it('creates intermediate objects and reads them back', () => {
     const root: Record<string, unknown> = {};
-    setNested(root, ['mcpServers', 'free-search-mcp'], { command: 'npx' });
-    expect(getNested(root, ['mcpServers'])).toEqual({ 'free-search-mcp': { command: 'npx' } });
-    expect(getNested(root, ['mcpServers', 'free-search-mcp'])).toEqual({ command: 'npx' });
+    setNested(root, ['mcpServers', 'free-search-mcp-ts'], { command: 'npx' });
+    expect(getNested(root, ['mcpServers'])).toEqual({ 'free-search-mcp-ts': { command: 'npx' } });
+    expect(getNested(root, ['mcpServers', 'free-search-mcp-ts'])).toEqual({ command: 'npx' });
 
     setNested(root, ['a', 'b', 'c'], { deep: true });
     expect(getNested(root, ['a', 'b'])).toEqual({ c: { deep: true } });
@@ -126,9 +126,9 @@ describe('nested config access', () => {
 
   it('deletes only the addressed key', () => {
     const root: Record<string, unknown> = {
-      mcpServers: { 'free-search-mcp': { command: 'npx' }, other: { command: 'other' } },
+      mcpServers: { 'free-search-mcp-ts': { command: 'npx' }, other: { command: 'other' } },
     };
-    expect(deleteNested(root, ['mcpServers', 'free-search-mcp'])).toBe(true);
+    expect(deleteNested(root, ['mcpServers', 'free-search-mcp-ts'])).toBe(true);
     expect(getNested(root, ['mcpServers'])).toEqual({ other: { command: 'other' } });
     expect(deleteNested(root, ['mcpServers', 'absent'])).toBe(false);
     expect(deleteNested({}, ['x', 'y'])).toBe(false);
@@ -141,22 +141,22 @@ describe('nested config access', () => {
 
 describe('buildEntryShape', () => {
   it('gives vscode a stdio type', () => {
-    const shaped = buildEntryShape(getClientSpec('vscode')!, 'free-search-mcp', ENTRY);
+    const shaped = buildEntryShape(getClientSpec('vscode')!, 'free-search-mcp-ts', ENTRY);
     expect(shaped['type']).toBe('stdio');
     expect(shaped['command']).toBe('npx');
-    expect(shaped['args']).toEqual(['-y', 'free-search-mcp']);
+    expect(shaped['args']).toEqual(['-y', 'free-search-mcp-ts']);
     expect(shaped['env']).toEqual({ BRAVE_API_KEY: 'secret' });
   });
 
   it('gives zed a custom source', () => {
-    const shaped = buildEntryShape(getClientSpec('zed')!, 'free-search-mcp', ENTRY);
+    const shaped = buildEntryShape(getClientSpec('zed')!, 'free-search-mcp-ts', ENTRY);
     expect(shaped['source']).toBe('custom');
     expect(shaped['command']).toBe('npx');
   });
 
   it('gives opencode a command array and an environment key', () => {
-    const shaped = buildEntryShape(getClientSpec('opencode')!, 'free-search-mcp', ENTRY);
-    expect(shaped['command']).toEqual(['npx', '-y', 'free-search-mcp']);
+    const shaped = buildEntryShape(getClientSpec('opencode')!, 'free-search-mcp-ts', ENTRY);
+    expect(shaped['command']).toEqual(['npx', '-y', 'free-search-mcp-ts']);
     expect(shaped['type']).toBe('local');
     expect(shaped['enabled']).toBe(true);
     expect(shaped['environment']).toEqual({ BRAVE_API_KEY: 'secret' });
@@ -164,15 +164,15 @@ describe('buildEntryShape', () => {
   });
 
   it('gives standard and toml clients command + args', () => {
-    const standard = buildEntryShape(getClientSpec('cursor')!, 'free-search-mcp', ENTRY);
-    const toml = buildEntryShape(getClientSpec('codex')!, 'free-search-mcp', ENTRY);
+    const standard = buildEntryShape(getClientSpec('cursor')!, 'free-search-mcp-ts', ENTRY);
+    const toml = buildEntryShape(getClientSpec('codex')!, 'free-search-mcp-ts', ENTRY);
     expect(standard['command']).toBe('npx');
-    expect(standard['args']).toEqual(['-y', 'free-search-mcp']);
+    expect(standard['args']).toEqual(['-y', 'free-search-mcp-ts']);
     expect(toml).toEqual(standard);
   });
 
   it('omits the env key entirely when nothing is forwarded', () => {
-    const shaped = buildEntryShape(getClientSpec('cursor')!, 'free-search-mcp', {
+    const shaped = buildEntryShape(getClientSpec('cursor')!, 'free-search-mcp-ts', {
       command: 'npx',
       args: [],
       env: {},
@@ -199,17 +199,17 @@ persistence = "save-all"
 `;
 
   it('renders a block with an env subsection', () => {
-    const block = tomlServerBlock('free-search-mcp', ENTRY);
-    expect(block).toContain('[mcp_servers.free-search-mcp]');
+    const block = tomlServerBlock('free-search-mcp-ts', ENTRY);
+    expect(block).toContain('[mcp_servers.free-search-mcp-ts]');
     expect(block).toContain('command = "npx"');
-    expect(block).toContain('args = ["-y", "free-search-mcp"]');
-    expect(block).toContain('[mcp_servers.free-search-mcp.env]');
+    expect(block).toContain('args = ["-y", "free-search-mcp-ts"]');
+    expect(block).toContain('[mcp_servers.free-search-mcp-ts.env]');
     expect(block).toContain('BRAVE_API_KEY = "secret"');
   });
 
   it('appends to an existing file without disturbing neighbouring tables', () => {
-    const updated = upsertTomlServer(EXISTING, 'free-search-mcp', tomlServerBlock('free-search-mcp', ENTRY));
-    expect(updated).toContain('[mcp_servers.free-search-mcp]');
+    const updated = upsertTomlServer(EXISTING, 'free-search-mcp-ts', tomlServerBlock('free-search-mcp-ts', ENTRY));
+    expect(updated).toContain('[mcp_servers.free-search-mcp-ts]');
     expect(updated).toContain('model = "gpt-5"');
     expect(updated).toContain('[mcp_servers.other]');
     expect(updated).toContain('command = "other-server"');
@@ -218,16 +218,16 @@ persistence = "save-all"
   });
 
   it('is idempotent on a second call', () => {
-    const once = upsertTomlServer(EXISTING, 'free-search-mcp', tomlServerBlock('free-search-mcp', ENTRY));
-    const twice = upsertTomlServer(once, 'free-search-mcp', tomlServerBlock('free-search-mcp', ENTRY));
+    const once = upsertTomlServer(EXISTING, 'free-search-mcp-ts', tomlServerBlock('free-search-mcp-ts', ENTRY));
+    const twice = upsertTomlServer(once, 'free-search-mcp-ts', tomlServerBlock('free-search-mcp-ts', ENTRY));
     expect(twice).toBe(once);
-    expect(occurrences(twice, '[mcp_servers.free-search-mcp]')).toBe(1);
+    expect(occurrences(twice, '[mcp_servers.free-search-mcp-ts]')).toBe(1);
   });
 
   it('removes the block and its env subsection but keeps the rest', () => {
-    const updated = upsertTomlServer(EXISTING, 'free-search-mcp', tomlServerBlock('free-search-mcp', ENTRY));
-    const removed = removeTomlServer(updated, 'free-search-mcp');
-    expect(removed).not.toContain('free-search-mcp');
+    const updated = upsertTomlServer(EXISTING, 'free-search-mcp-ts', tomlServerBlock('free-search-mcp-ts', ENTRY));
+    const removed = removeTomlServer(updated, 'free-search-mcp-ts');
+    expect(removed).not.toContain('free-search-mcp-ts');
     expect(removed).not.toContain('BRAVE_API_KEY');
     expect(removed).toContain('[mcp_servers.other]');
     expect(removed).toContain('command = "other-server"');
@@ -236,7 +236,7 @@ persistence = "save-all"
   });
 
   it('leaves a file without the entry untouched', () => {
-    expect(removeTomlServer(EXISTING, 'free-search-mcp')).toBe(EXISTING.trimEnd());
+    expect(removeTomlServer(EXISTING, 'free-search-mcp-ts')).toBe(EXISTING.trimEnd());
   });
 });
 
@@ -248,12 +248,12 @@ describe('resolveServerEntry', () => {
   it('uses npx in npx mode', () => {
     const entry = resolveServerEntry({ mode: 'npx', platform: 'linux', sourceEnv: {} });
     expect(entry.command).toBe('npx');
-    expect(entry.args).toEqual(['-y', 'free-search-mcp']);
+    expect(entry.args).toEqual(['-y', 'free-search-mcp-ts']);
     expect(entry.env).toEqual({});
   });
 
   it('uses the current node binary in node mode', () => {
-    const cliPath = join('opt', 'free-search-mcp', 'dist', 'cli.js');
+    const cliPath = join('opt', 'free-search-mcp-ts', 'dist', 'cli.js');
     const entry = resolveServerEntry({ mode: 'node', cliPath, platform: 'linux', sourceEnv: {} });
     expect(entry.command).toBe(process.execPath);
     expect(entry.args).toEqual([resolve(cliPath)]);
@@ -262,14 +262,14 @@ describe('resolveServerEntry', () => {
 
   it('refuses node mode for a transient _npx cache path', () => {
     const transient =
-      'C:/Users/someone/AppData/Local/npm-cache/_npx/abc123/node_modules/free-search-mcp/dist/cli.js';
+      'C:/Users/someone/AppData/Local/npm-cache/_npx/abc123/node_modules/free-search-mcp-ts/dist/cli.js';
     const entry = resolveServerEntry({ mode: 'auto', cliPath: transient, platform: 'linux', sourceEnv: {} });
     expect(entry.command).toBe('npx');
-    expect(entry.args).toContain('free-search-mcp');
+    expect(entry.args).toContain('free-search-mcp-ts');
   });
 
   it('uses node mode for a real node_modules installation', () => {
-    const installed = 'C:/work/project/node_modules/free-search-mcp/dist/cli.js';
+    const installed = 'C:/work/project/node_modules/free-search-mcp-ts/dist/cli.js';
     const entry = resolveServerEntry({ mode: 'auto', cliPath: installed, platform: 'linux', sourceEnv: {} });
     expect(entry.command).toBe(process.execPath);
     expect(entry.args).toEqual([resolve(installed)]);
@@ -283,7 +283,7 @@ describe('resolveServerEntry', () => {
   it('wraps npx in cmd /c on Windows when the client needs it', () => {
     const entry = resolveServerEntry({ mode: 'npx', platform: 'win32', windowsCmdWrap: true, sourceEnv: {} });
     expect(entry.command).toBe('cmd');
-    expect(entry.args).toEqual(['/c', 'npx', '-y', 'free-search-mcp']);
+    expect(entry.args).toEqual(['/c', 'npx', '-y', 'free-search-mcp-ts']);
   });
 
   it('forwards only recognised environment variables', () => {
@@ -343,11 +343,11 @@ describe('install and uninstall (JSON client)', () => {
     const first = install({ clients: ['cursor'], mode: 'npx', context });
     expect(first.results[0]!.action).toBe('installed');
     expect(first.results[0]!.detected).toBe(false);
-    expect(first.serverName).toBe('free-search-mcp');
+    expect(first.serverName).toBe('free-search-mcp-ts');
     expect(first.entry.command).toBe('npx');
     expect(existsSync(configPath)).toBe(true);
     expect(first.results[0]!.backup).toBeUndefined();
-    expect(readJson(configPath).mcpServers['free-search-mcp'].args).toEqual(['-y', 'free-search-mcp']);
+    expect(readJson(configPath).mcpServers['free-search-mcp-ts'].args).toEqual(['-y', 'free-search-mcp-ts']);
 
     const second = install({ clients: ['cursor'], mode: 'npx', context });
     expect(second.results[0]!.action).toBe('already-present');
@@ -369,12 +369,12 @@ describe('install and uninstall (JSON client)', () => {
     expect(report.results[0]!.action).toBe('installed');
     expect(report.results[0]!.backup).toBe(`${configPath}.bak`);
     expect(existsSync(`${configPath}.bak`)).toBe(true);
-    expect(JSON.parse(readFileSync(`${configPath}.bak`, 'utf8')).mcpServers['free-search-mcp']).toBeUndefined();
+    expect(JSON.parse(readFileSync(`${configPath}.bak`, 'utf8')).mcpServers['free-search-mcp-ts']).toBeUndefined();
 
     const after = readJson(configPath);
     expect(after.theme).toBe('dark');
     expect(after.mcpServers.other).toEqual({ command: 'other', args: ['--x'] });
-    expect(after.mcpServers['free-search-mcp']).toBeDefined();
+    expect(after.mcpServers['free-search-mcp-ts']).toBeDefined();
   });
 
   it('reports updated only with force, and then rewrites the entry', () => {
@@ -396,7 +396,7 @@ describe('install and uninstall (JSON client)', () => {
     });
     expect(forced.results[0]!.action).toBe('updated');
     expect(forced.results[0]!.backup).toBe(`${configPath}.bak`);
-    expect(readJson(configPath).mcpServers['free-search-mcp'].env).toMatchObject({ FREE_SEARCH_REGION: 'de' });
+    expect(readJson(configPath).mcpServers['free-search-mcp-ts'].env).toMatchObject({ FREE_SEARCH_REGION: 'de' });
   });
 
   it('writes nothing at all in dry-run mode', () => {
@@ -429,7 +429,7 @@ describe('install and uninstall (JSON client)', () => {
     expect(removed.results[0]!.backup).toBe(`${configPath}.bak`);
 
     const after = readJson(configPath);
-    expect(after.mcpServers['free-search-mcp']).toBeUndefined();
+    expect(after.mcpServers['free-search-mcp-ts']).toBeUndefined();
     expect(after.mcpServers.other).toEqual({ command: 'other' });
     expect(after.theme).toBe('dark');
   });
@@ -469,9 +469,9 @@ describe('install and uninstall (TOML client)', () => {
     expect(first.results[0]!.action).toBe('installed');
     expect(existsSync(configPath)).toBe(true);
     const text = readFileSync(configPath, 'utf8');
-    expect(text).toContain('[mcp_servers.free-search-mcp]');
+    expect(text).toContain('[mcp_servers.free-search-mcp-ts]');
     expect(text).toContain('command = "npx"');
-    expect(text).toContain('args = ["-y", "free-search-mcp"]');
+    expect(text).toContain('args = ["-y", "free-search-mcp-ts"]');
 
     const second = install({ clients: ['codex'], mode: 'npx', context });
     expect(second.results[0]!.action).toBe('already-present');
@@ -486,13 +486,13 @@ describe('install and uninstall (TOML client)', () => {
     expect(forced.results[0]!.action).toBe('updated');
     expect(forced.results[0]!.backup).toBe(`${configPath}.bak`);
     const forcedText = readFileSync(configPath, 'utf8');
-    expect(forcedText).toContain('[mcp_servers.free-search-mcp.env]');
+    expect(forcedText).toContain('[mcp_servers.free-search-mcp-ts.env]');
     expect(forcedText).toContain('FREE_SEARCH_REGION = "de"');
-    expect(occurrences(forcedText, '[mcp_servers.free-search-mcp]')).toBe(1);
+    expect(occurrences(forcedText, '[mcp_servers.free-search-mcp-ts]')).toBe(1);
 
     const removed = uninstall({ clients: ['codex'], context });
     expect(removed.results[0]!.action).toBe('removed');
-    expect(readFileSync(configPath, 'utf8')).not.toContain('free-search-mcp');
+    expect(readFileSync(configPath, 'utf8')).not.toContain('free-search-mcp-ts');
   });
 
   it('keeps unrelated tables in an existing TOML file', () => {
@@ -507,11 +507,11 @@ describe('install and uninstall (TOML client)', () => {
     expect(installed).toContain('model = "gpt-5"');
     expect(installed).toContain('[mcp_servers.other]');
     expect(installed).toContain('command = "other"');
-    expect(installed).toContain('[mcp_servers.free-search-mcp]');
+    expect(installed).toContain('[mcp_servers.free-search-mcp-ts]');
 
     uninstall({ clients: ['codex'], context });
     const after = readFileSync(configPath, 'utf8');
-    expect(after).not.toContain('free-search-mcp');
+    expect(after).not.toContain('free-search-mcp-ts');
     expect(after).toContain('model = "gpt-5"');
     expect(after).toContain('[mcp_servers.other]');
     expect(after).toContain('command = "other"');
@@ -528,15 +528,15 @@ describe('install reports', () => {
     const report = install({ clients: ['cursor'], mode: 'npx', context: contextFor(home) });
     const text = formatInstallReport(report);
     expect(text).toContain('# MCP client registration');
-    expect(text).toContain('Server name: `free-search-mcp`');
+    expect(text).toContain('Server name: `free-search-mcp-ts`');
     expect(text).toContain('Cursor');
     expect(text).toContain('## Verify');
   });
 
   it('explains what to do when no client was detected', () => {
     const text = formatInstallReport({
-      serverName: 'free-search-mcp',
-      entry: { command: 'npx', args: ['-y', 'free-search-mcp'], env: {} },
+      serverName: 'free-search-mcp-ts',
+      entry: { command: 'npx', args: ['-y', 'free-search-mcp-ts'], env: {} },
       results: [],
       dryRun: false,
     });
