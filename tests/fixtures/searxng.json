@@ -1,0 +1,55 @@
+{
+  "query": "model context protocol",
+  "number_of_results": 1240,
+  "results": [
+    {
+      "url": "https://modelcontextprotocol.io/intro",
+      "title": "Model Context Protocol",
+      "content": "The Model Context Protocol (MCP) is an open protocol that standardizes how applications provide context to large language models.",
+      "engine": "google",
+      "category": "general",
+      "score": 9.5,
+      "publishedDate": "2025-11-04T00:00:00"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Model_Context_Protocol",
+      "title": "Model Context Protocol - Wikipedia",
+      "content": "MCP is a protocol introduced by Anthropic in November 2024 for connecting AI assistants to external tools and data sources.",
+      "engine": "bing",
+      "category": "general",
+      "score": 7.25,
+      "publishedDate": null,
+      "positions": [2]
+    },
+    {
+      "url": "https://www.anthropic.com/news/model-context-protocol",
+      "title": "Introducing the Model Context Protocol | Anthropic",
+      "content": "MCP is an open standard that lets developers build secure, two-way connections between their data sources and AI-powered tools.",
+      "engine": "duckduckgo",
+      "category": "general",
+      "score": 5.5
+    },
+    {
+      "url": "https://github.com/modelcontextprotocol/servers",
+      "title": "modelcontextprotocol/servers: Model Context Protocol Servers",
+      "content": "A collection of reference implementations and community-built servers that expose files, databases, git repositories and APIs over MCP.",
+      "engine": "brave",
+      "category": "general",
+      "score": 4.1,
+      "publishedDate": "2025-12-02"
+    },
+    {
+      "url": "https://www.npmjs.com/package/@modelcontextprotocol/sdk",
+      "title": "@modelcontextprotocol/sdk - npm",
+      "content": "Official TypeScript SDK for the Model Context Protocol. Build servers and clients that speak MCP over stdio or streamable HTTP.",
+      "engine": "mojeek",
+      "category": "general",
+      "score": 3.4
+    }
+  ],
+  "answers": [],
+  "corrections": [],
+  "infoboxes": [],
+  "suggestions": ["model context protocol servers", "mcp specification"],
+  "unresponsive_engines": []
+}

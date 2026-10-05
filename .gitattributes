@@ -1,0 +1,21 @@
+# Normalise line endings in the repository: LF everywhere, whatever the
+# contributor's platform. CI runs on Linux, macOS and Windows, and the engine
+# fixtures are real captured response bodies — rewriting their line endings
+# would alter the very bytes the parsers are tested against.
+* text=auto eol=lf
+
+# Files that must keep their exact bytes.
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff2 binary
+
+# Fixtures are captured network responses; never touch them.
+tests/fixtures/** -text
+
+# Lockfiles are generated.
+package-lock.json text eol=lf
+
+# Windows helper scripts, if any are ever added.
+*.cmd text eol=crlf
+*.ps1 text eol=crlf

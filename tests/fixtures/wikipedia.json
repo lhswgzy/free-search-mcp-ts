@@ -1,0 +1,43 @@
+{
+  "batchcomplete": "",
+  "continue": {
+    "sroffset": 3,
+    "continue": "-||"
+  },
+  "query": {
+    "searchinfo": {
+      "totalhits": 412,
+      "suggestion": "model context protocol",
+      "suggestionsnippet": "<em>model context protocol</em>"
+    },
+    "search": [
+      {
+        "ns": 0,
+        "title": "Model Context Protocol",
+        "pageid": 77980423,
+        "size": 18422,
+        "wordcount": 1873,
+        "snippet": "<span class=\"searchmatch\">Model</span> <span class=\"searchmatch\">Context</span> <span class=\"searchmatch\">Protocol</span> (MCP) is an open standard introduced by Anthropic in November 2024 for connecting AI assistants to external data sources and tools.",
+        "timestamp": "2026-09-28T14:22:07Z"
+      },
+      {
+        "ns": 0,
+        "title": "Anthropic",
+        "pageid": 43162999,
+        "size": 96410,
+        "wordcount": 9102,
+        "snippet": "In November 2024 Anthropic released the <span class=\"searchmatch\">Model</span> <span class=\"searchmatch\">Context</span> <span class=\"searchmatch\">Protocol</span>, an open standard for tool use by large language models, and donated it to the Linux Foundation in 2025.",
+        "timestamp": "2026-10-01T09:03:51Z"
+      },
+      {
+        "ns": 0,
+        "title": "Language model &amp; tool use",
+        "pageid": 77120004,
+        "size": 5120,
+        "wordcount": 640,
+        "snippet": "Function calling lets a model invoke external tools. The <span class=\"searchmatch\">Model</span> <span class=\"searchmatch\">Context</span> <span class=\"searchmatch\">Protocol</span> generalises this into a transport-agnostic client/server interface.",
+        "timestamp": "2026-07-14T18:45:00Z"
+      }
+    ]
+  }
+}

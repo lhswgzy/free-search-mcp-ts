@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # 20.19 is the minimum supported runtime; 24 is what the SQLite FTS5
+        # index needs, so both the degraded and the full path are exercised.
+        node: ['20.19', '22', '24']
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        exclude:
+          # Keep the matrix to a sane size: the minimum and the recommended
+          # runtime are checked on every OS, the middle one only on Linux.
+          - os: windows-latest
+            node: '22'
+          - os: macos-latest
+            node: '22'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm test
+        env:
+          # Keep the suite offline and isolated from any developer config.
+          FREE_SEARCH_DATA_DIR: ${{ runner.temp }}/free-search-mcp-ci
+          FREE_SEARCH_LOG_LEVEL: error
+
+      - name: Smoke test the CLI
+        run: |
+          node dist/cli.js --version
+          node dist/cli.js tools
+          node dist/cli.js clients
+        env:
+          FREE_SEARCH_DATA_DIR: ${{ runner.temp }}/free-search-mcp-ci
+
+  package:
+    name: Package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Build and pack
+        run: |
+          npm run build
+          npm pack --dry-run
+      - name: Assert the published tarball contains what it should
+        run: |
+          npm pack --json > pack.json
+          node -e "
+            const info = require('./pack.json')[0];
+            const files = info.files.map((f) => f.path);
+            const required = ['dist/cli.js', 'dist/index.js', 'README.md', 'LICENSE', 'CHANGELOG.md'];
+            const missing = required.filter((r) => !files.includes(r));
+            if (missing.length) {
+              console.error('missing from tarball:', missing.join(', '));
+              process.exit(1);
+            }
+            if (files.some((f) => f.startsWith('tests/') || f.startsWith('scratch/'))) {
+              console.error('tests or scratch leaked into the tarball');
+              process.exit(1);
+            }
+            console.log('tarball ok:', files.length, 'files,', (info.size / 1024).toFixed(0), 'kB');
+          "

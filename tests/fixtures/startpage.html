@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+  Synthetic fixture: https://www.startpage.com/sp/search?query=model+context+protocol
+  Startpage proxies Google and is unreachable from the authoring machine, so this
+  reproduces the documented `.w-gl__result` markup. The last block keeps the
+  older `.result` / `h3 a` shape so the fallback selector set has something to
+  match: `extractWithSelectors` returns the first healthy set, so mixed pages
+  yield the `.w-gl__result` subset only (covered by the scratch script).
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>model context protocol - Startpage</title>
+</head>
+<body>
+  <div id="main">
+    <div class="w-gl__result">
+      <a class="w-gl__result-title" href="https://modelcontextprotocol.io/intro">Model Context Protocol</a>
+      <p class="w-gl__description">The Model Context Protocol (MCP) is an open protocol that standardizes how applications provide context to large language models.</p>
+      <span class="w-gl__date">Nov 4, 2025</span>
+    </div>
+
+    <div class="w-gl__result">
+      <a class="w-gl__result-title" href="https://en.wikipedia.org/wiki/Model_Context_Protocol">Model Context Protocol - Wikipedia</a>
+      <p class="w-gl__description">MCP is a protocol introduced by Anthropic in November 2024 for connecting AI assistants to external tools and data sources.</p>
+      <span class="w-gl__date">Oct 19, 2025</span>
+    </div>
+
+    <div class="w-gl__result">
+      <a class="w-gl__result-title" href="https://www.anthropic.com/news/model-context-protocol">Introducing the Model Context Protocol | Anthropic</a>
+      <p class="w-gl__description">MCP is an open standard that lets developers build secure, two-way connections between their data sources and AI-powered tools.</p>
+      <span class="w-gl__date">Nov 25, 2024</span>
+    </div>
+
+    <div class="w-gl__result">
+      <a class="w-gl__result-title" href="https://github.com/modelcontextprotocol/servers">modelcontextprotocol/servers: Model Context Protocol Servers</a>
+      <p class="w-gl__description">A collection of reference implementations and community-built servers that expose files, databases, git repositories and APIs over MCP.</p>
+      <span class="w-gl__date">Dec 2, 2025</span>
+    </div>
+
+    <div class="w-gl__result">
+      <a class="w-gl__result-title" href="https://www.npmjs.com/package/@modelcontextprotocol/sdk">@modelcontextprotocol/sdk - npm</a>
+      <p class="w-gl__description">Official TypeScript SDK for the Model Context Protocol. Build servers and clients that speak MCP over stdio or streamable HTTP.</p>
+      <span class="w-gl__date">Dec 11, 2025</span>
+    </div>
+  </div>
+
+  <div class="pagination">
+    <a href="/sp/search?query=model+context+protocol&amp;page=2">Next</a>
+  </div>
+</body>
+</html>

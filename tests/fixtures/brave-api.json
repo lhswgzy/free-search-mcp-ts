@@ -1,0 +1,68 @@
+{
+  "type": "search",
+  "query": {
+    "original": "model context protocol",
+    "altered": null,
+    "spellcheck_off": false,
+    "show_strict_warning": false,
+    "country": "us",
+    "search_lang": "en"
+  },
+  "web": {
+    "type": "search",
+    "results": [
+      {
+        "title": "Model Context Protocol \u2014 <strong>Introduction</strong>",
+        "url": "https://modelcontextprotocol.io/introduction",
+        "description": "The Model Context Protocol (MCP) is an open protocol that standardises how applications provide context to large language models.",
+        "page_age": "2025-03-26T14:21:07",
+        "profile": {
+          "name": "Model Context Protocol",
+          "long_name": "modelcontextprotocol.io",
+          "url": "https://modelcontextprotocol.io"
+        },
+        "language": "en",
+        "family_friendly": true
+      },
+      {
+        "title": "Specification \u2014 Model Context Protocol",
+        "url": "https://modelcontextprotocol.io/specification/2025-03-26",
+        "description": "The specification defines the <strong>JSON-RPC</strong> message shapes, lifecycle and capability negotiation for MCP clients and servers.",
+        "page_age": "2025-04-11T09:02:44",
+        "profile": {
+          "name": "Model Context Protocol",
+          "long_name": "modelcontextprotocol.io",
+          "url": "https://modelcontextprotocol.io"
+        },
+        "language": "en",
+        "family_friendly": true
+      },
+      {
+        "title": "Anthropic announces the Model Context Protocol",
+        "url": "https://www.anthropic.com/news/model-context-protocol",
+        "description": "MCP gives Claude and other assistants a standard way to connect to the systems where data actually lives, replacing bespoke integrations.",
+        "age": "2 weeks ago",
+        "profile": {
+          "name": "Anthropic",
+          "long_name": "anthropic.com",
+          "url": "https://www.anthropic.com"
+        },
+        "language": "en",
+        "family_friendly": true
+      },
+      {
+        "title": "awesome-mcp-servers: a curated list of MCP servers",
+        "url": "https://github.com/punkpeye/awesome-mcp-servers",
+        "description": "A community list of Model Context Protocol servers covering browser automation, databases, cloud APIs and developer tooling.",
+        "page_age": "2025-02-18T00:00:00",
+        "profile": {
+          "name": "GitHub",
+          "long_name": "github.com",
+          "url": "https://github.com"
+        },
+        "language": "en",
+        "family_friendly": true
+      }
+    ]
+  }
+}

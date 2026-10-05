@@ -1,0 +1,270 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/3jZ/T4cabKSDIWxHJwqKa/VFpyo</id>
+  <title>arXiv Query: search_query=all:"model context protocol"&amp;id_list=&amp;start=0&amp;max_results=10</title>
+  <updated>2026-10-05T12:59:17Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22model+context+protocol%22&amp;start=0&amp;max_results=10&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+  <opensearch:totalResults>580</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2507.19570v1</id>
+    <title>MCP4EDA: LLM-Powered Model Context Protocol RTL-to-GDSII Automation with Backend Aware Synthesis Optimization</title>
+    <updated>2025-07-25T17:16:26Z</updated>
+    <link href="https://arxiv.org/abs/2507.19570v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.19570v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents MCP4EDA, the first Model Context Protocol server that enables Large Language Models (LLMs) to control and optimize the complete open-source RTL-to-GDSII design flow through natural language interaction. The system integrates Yosys synthesis, Icarus Verilog simulation, OpenLane place-and-route, GTKWave analysis, and KLayout visualization into a unified LLM-accessible interface, enabling designers to execute complex multi-tool EDA workflows conversationally via AI assistants such as Claude Desktop and Cursor IDE. The principal contribution is a backend-aware synthesis optimization methodology wherein LLMs analyze actual post-layout timing, power, and area metrics from OpenLane results to iteratively refine synthesis TCL scripts, establishing a closed-loop optimization system that bridges the traditional gap between synthesis estimates and physical implementation reality. In contrast to conventional flows that rely on wire-load models, this methodology leverages real backend performance data to guide synthesis parameter tuning, optimization sequence selection, and constraint refinement, with the LLM functioning as an intelligent design space exploration agent. Experimental evaluation on representative digital designs demonstrates 15-30% improvements in timing closure and 10-20% area reduction compared to default synthesis flows, establishing MCP4EDA as the first practical LLM-controlled end-to-end open-source EDA automation system. The code and demo are avaiable at: http://www.agent4eda.com/</summary>
+    <category term="cs.AR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-25T17:16:26Z</published>
+    <arxiv:comment>7 pages, 5 figures Keywords: Model Context Protocol, Electronic Design Automation, Large Language Models, Synthesis Optimization</arxiv:comment>
+    <arxiv:primary_category term="cs.AR"/>
+    <author>
+      <name>Yiting Wang</name>
+    </author>
+    <author>
+      <name>Wanghao Ye</name>
+    </author>
+    <author>
+      <name>Yexiao He</name>
+    </author>
+    <author>
+      <name>Yiran Chen</name>
+    </author>
+    <author>
+      <name>Gang Qu</name>
+    </author>
+    <author>
+      <name>Ang Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.18764v2</id>
+    <title>The Convergence of Schema-Guided Dialogue Systems and the Model Context Protocol</title>
+    <updated>2026-03-04T20:28:56Z</updated>
+    <link href="https://arxiv.org/abs/2602.18764v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.18764v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper establishes a fundamental convergence: Schema-Guided Dialogue (SGD) and the Model Context Protocol (MCP) represent two manifestations of a unified paradigm for deterministic, auditable LLM-agent interaction. SGD, designed for dialogue-based API discovery (2019), and MCP, now the de facto standard for LLM-tool integration, share the same core insight -- that schemas can encode not just tool signatures but operational constraints and reasoning guidance. By analyzing this convergence, we extract five foundational principles for schema design: (1) Semantic Completeness over Syntactic Precision, (2) Explicit Action Boundaries, (3) Failure Mode Documentation, (4) Progressive Disclosure Compatibility, and (5) Inter-Tool Relationship Declaration. These principles reveal three novel insights: first, SGD's original design was fundamentally sound and should be inherited by MCP; second, both frameworks leave failure modes and inter-tool relationships unexploited -- gaps we identify and resolve; third, progressive disclosure emerges as a critical production-scaling insight under real-world token constraints. We provide concrete design patterns for each principle. These principles position schema-driven governance as a scalable mechanism for AI system oversight without requiring proprietary system inspection -- central to Software 3.0.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-21T09:02:35Z</published>
+    <arxiv:comment>18 sections, 4 figures, 7 tables, 40 references. Original research presenting: (1) formal framework mapping Schema-Guided Dialogue principles to Model Context Protocol concepts, (2) five foundational design principles for LLM-native schema authoring, (3) architectural patterns for secure, scalable agent orchestration. Research supported by SBB (Swiss Federal Railways)</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Andreas Schlapbach</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.01129v1</id>
+    <title>SMCP: Secure Model Context Protocol</title>
+    <updated>2026-02-01T09:59:57Z</updated>
+    <link href="https://arxiv.org/abs/2602.01129v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.01129v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Agentic AI systems built around large language models (LLMs) are moving away from closed, single-model frameworks and toward open ecosystems that connect a variety of agents, external tools, and resources. The Model Context Protocol (MCP) has emerged as a standard to unify tool access, allowing agents to discover, invoke, and coordinate with tools more flexibly. However, as MCP becomes more widely adopted, it also brings a new set of security and privacy challenges. These include risks such as unauthorized access, tool poisoning, prompt injection, privilege escalation, and supply chain attacks, any of which can impact different parts of the protocol workflow. While recent research has examined possible attack surfaces and suggested targeted countermeasures, there is still a lack of systematic, protocol-level security improvements for MCP. To address this, we introduce the Secure Model Context Protocol (SMCP), which builds on MCP by adding unified identity management, robust mutual authentication, ongoing security context propagation, fine-grained policy enforcement, and comprehensive audit logging. In this paper, we present the main components of SMCP, explain how it helps reduce security risks, and illustrate its application with practical examples. We hope that this work will contribute to the development of agentic systems that are not only powerful and adaptable, but also secure and dependable.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-01T09:59:57Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Xinyi Hou</name>
+    </author>
+    <author>
+      <name>Shenao Wang</name>
+    </author>
+    <author>
+      <name>Yifan Zhang</name>
+    </author>
+    <author>
+      <name>Ziluo Xue</name>
+    </author>
+    <author>
+      <name>Yanjie Zhao</name>
+    </author>
+    <author>
+      <name>Cai Fu</name>
+    </author>
+    <author>
+      <name>Haoyu Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.13849v1</id>
+    <title>MCPThreatHive: Automated Threat Intelligence for Model Context Protocol Ecosystems</title>
+    <updated>2026-04-15T13:19:22Z</updated>
+    <link href="https://arxiv.org/abs/2604.13849v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.13849v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid proliferation of Model Context Protocol (MCP)-based agentic systems has introduced a new category of security threats that existing frameworks are inadequately equipped to address. We present MCPThreatHive, an open-source platform that automates the end-to-end lifecycle of MCP threat intelligence: from continuous, multi-source data collection through AI-driven threat extraction and classification, to structured knowledge graph storage and interactive visualization. The platform operationalizes the MCP-38 threat taxonomy, a curated set of 38 MCP-specific threat patterns mapped to STRIDE, OWASP Top 10 for LLM Applications, and OWASP Top 10 for Agentic Applications. A composite risk scoring model provides quantitative prioritization. Through a comparative analysis of representative existing MCP security tools, we identify three critical coverage gaps that MCPThreatHive addresses: incomplete compositional attack modeling, absence of continuous threat intelligence, and lack of unified multi-framework classification.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-15T13:19:22Z</published>
+    <arxiv:comment>A white paper of our presentation at DEFCON SG 2026 (Demo Labs) https://defcon.org/html/defcon-singapore/dc-singapore-demolabs.html</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Yi Ting Shen</name>
+    </author>
+    <author>
+      <name>Kentaroh Toyoda</name>
+    </author>
+    <author>
+      <name>Alex Leung</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.08065v1</id>
+    <title>Multi-Scale Network Dynamics and Systemic Risk: A Model Context Protocol Approach to Financial Markets</title>
+    <updated>2025-07-10T17:27:43Z</updated>
+    <link href="https://arxiv.org/abs/2507.08065v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.08065v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper introduces a novel framework for analyzing systemic risk in financial markets through multi-scale network dynamics using Model Context Protocol (MCP) for agent communication. We develop an integrated approach that combines transfer entropy networks, agent-based modeling, and wavelet decomposition to capture information flows across temporal scales implemented in the MCPFM (Model Context Protocol Financial Markets) R package. Our methodology enables heterogeneous financial agents including high-frequency traders, market makers, institutional investors, and regulators to communicate through structured protocols while maintaining realistic market microstructure. The empirical analysis demonstrates that our multi-scale approach reveals previously hidden systemic risk patterns, with the proposed systemic risk index achieving superior early warning capabilities compared to traditional measures. The framework provides new insights for macroprudential policy design and regulatory intervention strategies. The complete implementation is available as an open-source R package at https://github.com/avishekb9/MCPFM to facilitate reproducible research and practical applications.</summary>
+    <category term="q-fin.RM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-10T17:27:43Z</published>
+    <arxiv:comment>20 pages, 5 figures, 2 tables</arxiv:comment>
+    <arxiv:primary_category term="q-fin.RM"/>
+    <author>
+      <name>Avishek Bhandari</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.25635v2</id>
+    <title>An Empirical Study of Model Context Protocol Applications</title>
+    <updated>2026-07-29T11:36:56Z</updated>
+    <link href="https://arxiv.org/abs/2607.25635v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.25635v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Model Context Protocol (MCP) standardizes how large language model applications communicate with external tools, but leaves the application side unspecified: unlike traditional dependencies resolved through package managers, developers integrating MCP servers face no conventions for configuration, communication, or human oversight. This ecosystem is also under-researched, with existing work focused on servers rather than the applications consuming them. We conduct a large-scale study of 1,723 MCPApps mined from GitHub. We first derive MCPAppTax from a representative sample, then use an LLM-assisted pipeline to apply it across the full dataset, characterizing server integration across configuration, SDK use, and human-in-the-loop mechanisms. Our results show that the ecosystem has converged on some practices but not others: most MCPApps configure servers using files (85.2%) and use an official SDK (81.1%) to communicate with servers, yet no naming convention has emerged for configuration files. Human oversight diverges most, logging (90.8%) and enable/disable controls (77.2%) are common, but only 37.2% gate tool execution behind a blocking approval step, leaving the LLM able to invoke any enabled tool unconditionally in most MCPApps.</summary>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-28T12:16:46Z</published>
+    <arxiv:primary_category term="cs.SE"/>
+    <author>
+      <name>Muhammad Hamza Arshad Majeed</name>
+    </author>
+    <author>
+      <name>May Mahmoud</name>
+    </author>
+    <author>
+      <name>Sarah Nadi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.03828v1</id>
+    <title>An Agentic Model Context Protocol Framework for Medical Concept Standardization</title>
+    <updated>2025-09-04T02:32:22Z</updated>
+    <link href="https://arxiv.org/abs/2509.03828v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.03828v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Observational Medical Outcomes Partnership (OMOP) common data model (CDM) provides a standardized representation of heterogeneous health data to support large-scale, multi-institutional research. One critical step in data standardization using OMOP CDM is the mapping of source medical terms to OMOP standard concepts, a procedure that is resource-intensive and error-prone. While large language models (LLMs) have the potential to facilitate this process, their tendency toward hallucination makes them unsuitable for clinical deployment without training and expert validation. Here, we developed a zero-training, hallucination-preventive mapping system based on the Model Context Protocol (MCP), a standardized and secure framework allowing LLMs to interact with external resources and tools. The system enables explainable mapping and significantly improves efficiency and accuracy with minimal effort. It provides real-time vocabulary lookups and structured reasoning outputs suitable for immediate use in both exploratory and production environments.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-04T02:32:22Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Jaerong Ahn</name>
+    </author>
+    <author>
+      <name>Andrew Wen</name>
+    </author>
+    <author>
+      <name>Nan Wang</name>
+    </author>
+    <author>
+      <name>Heling Jia</name>
+    </author>
+    <author>
+      <name>Zhiyi Yue</name>
+    </author>
+    <author>
+      <name>Sunyang Fu</name>
+    </author>
+    <author>
+      <name>Hongfang Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.25292v3</id>
+    <title>A Measurement Study of Model Context Protocol Ecosystem</title>
+    <updated>2025-11-15T14:28:21Z</updated>
+    <link href="https://arxiv.org/abs/2509.25292v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.25292v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Model Context Protocol (MCP) has been proposed as a unifying standard for connecting large language models (LLMs) with external tools and resources, promising the same role for AI integration that HTTP and USB played for the Web and peripherals. Yet, despite rapid adoption and hype, its trajectory remains uncertain. Are MCP marketplaces truly growing, or merely inflated by placeholders and abandoned prototypes? Are servers secure and privacy-preserving, or do they expose users to systemic risks? And do clients converge on standardized protocols, or remain fragmented across competing designs? In this paper, we present the first large-scale empirical study of the MCP ecosystem. We design and implement MCPCrawler, a systematic measurement framework that collects and normalizes data from six major markets. Over a 14-day campaign, MCPCrawler aggregated 17,630 raw entries, of which 8,401 valid projects (8,060 servers and 341 clients) were analyzed. Our results reveal that more than half of listed projects are invalid or low-value, that servers face structural risks including dependency monocultures and uneven maintenance, and that clients exhibit a transitional phase in protocol and connection patterns. Together, these findings provide the first evidence-based view of the MCP ecosystem, its risks, and its future trajectory.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-29T14:29:20Z</published>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Hechuan Guo</name>
+    </author>
+    <author>
+      <name>Yongle Hao</name>
+    </author>
+    <author>
+      <name>Yue Zhang</name>
+    </author>
+    <author>
+      <name>Minghui Xu</name>
+    </author>
+    <author>
+      <name>Peizhuo Lv</name>
+    </author>
+    <author>
+      <name>Jiezhi Chen</name>
+    </author>
+    <author>
+      <name>Xiuzhen Cheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.18063v1</id>
+    <title>MCP-38: A Comprehensive Threat Taxonomy for Model Context Protocol Systems (v1.0)</title>
+    <updated>2026-03-18T02:22:41Z</updated>
+    <link href="https://arxiv.org/abs/2603.18063v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.18063v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Model Context Protocol (MCP) introduces a structurally distinct attack surface that existing threat frameworks, designed for traditional software systems or generic LLM deployments, do not adequately cover. This paper presents MCP-38, a protocol-specific threat taxonomy consisting of 38 threat categories (MCP-01 through MCP-38). The taxonomy was derived through a systematic four-phase methodology: protocol decomposition, multi-framework cross-mapping, real-world incident synthesis, and remediation-surface categorization. Each category is mapped to STRIDE, OWASP Top 10 for LLM Applications (2025, LLM01--LLM10), and the OWASP Top 10 for Agentic Applications (2026, ASI01--ASI10). MCP-38 addresses critical threats arising from MCP's semantic attack surface (tool description poisoning, indirect prompt injection, parasitic tool chaining, and dynamic trust violations), none of which are adequately captured by prior work. MCP-38 provides the definitional and empirical foundation for automated threat intelligence platforms.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-18T02:22:41Z</published>
+    <arxiv:comment>v1.0</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Yi Ting Shen</name>
+    </author>
+    <author>
+      <name>Kentaroh Toyoda</name>
+    </author>
+    <author>
+      <name>Alex Leung</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.11154v2</id>
+    <title>MPMA: Preference Manipulation Attack Against Model Context Protocol</title>
+    <updated>2025-11-11T14:42:31Z</updated>
+    <link href="https://arxiv.org/abs/2505.11154v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.11154v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Model Context Protocol (MCP) standardizes interface mapping for large language models (LLMs) to access external data and tools, which revolutionizes the paradigm of tool selection and facilitates the rapid expansion of the LLM agent tool ecosystem. However, as the MCP is increasingly adopted, third-party customized versions of the MCP server expose potential security vulnerabilities. In this paper, we first introduce a novel security threat, which we term the MCP Preference Manipulation Attack (MPMA). An attacker deploys a customized MCP server to manipulate LLMs, causing them to prioritize it over other competing MCP servers. This can result in economic benefits for attackers, such as revenue from paid MCP services or advertising income generated from free servers. To achieve MPMA, we first design a Direct Preference Manipulation Attack (DPMA) that achieves significant effectiveness by inserting the manipulative word and phrases into the tool name and description. However, such a direct modification is obvious to users and lacks stealthiness. To address these limitations, we further propose Genetic-based Advertising Preference Manipulation Attack (GAPMA). GAPMA employs four commonly used strategies to initialize descriptions and integrates a Genetic Algorithm (GA) to enhance stealthiness. The experiment results demonstrate that GAPMA balances high effectiveness and stealthiness. Our study reveals a critical vulnerability of the MCP in open ecosystems, highlighting an urgent need for robust defense mechanisms to ensure the fairness of the MCP ecosystem.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-16T11:55:12Z</published>
+    <arxiv:comment>This is an extended version of the copyrighted publication at AAAI</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Zihan Wang</name>
+    </author>
+    <author>
+      <name>Rui Zhang</name>
+    </author>
+    <author>
+      <name>Yu Liu</name>
+    </author>
+    <author>
+      <name>Wenshu Fan</name>
+    </author>
+    <author>
+      <name>Wenbo Jiang</name>
+    </author>
+    <author>
+      <name>Qingchuan Zhao</name>
+    </author>
+    <author>
+      <name>Hongwei Li</name>
+    </author>
+    <author>
+      <name>Guowen Xu</name>
+    </author>
+  </entry>
+</feed>

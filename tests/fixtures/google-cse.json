@@ -1,0 +1,84 @@
+{
+  "kind": "customsearch#search",
+  "url": {
+    "type": "application/json",
+    "template": "https://www.googleapis.com/customsearch/v1?q={searchTerms}&num={count?}&start={startIndex?}&hl={hl}&gl={gl}&safe={safe?}&dateRestrict={dateRestrict?}&cx={cx?}&key={key?}"
+  },
+  "queries": {
+    "request": [
+      {
+        "title": "Google Custom Search - model context protocol",
+        "totalResults": "8410000",
+        "searchTerms": "model context protocol",
+        "count": 10,
+        "startIndex": 1,
+        "inputEncoding": "utf8",
+        "outputEncoding": "utf8",
+        "safe": "off",
+        "cx": "0123456789abcdef0"
+      }
+    ]
+  },
+  "searchInformation": {
+    "searchTime": 0.382941,
+    "formattedSearchTime": "0.38",
+    "totalResults": "8410000",
+    "formattedTotalResults": "8,410,000"
+  },
+  "items": [
+    {
+      "kind": "customsearch#result",
+      "title": "Model Context Protocol \u2014 Introduction",
+      "htmlTitle": "Model Context Protocol \u2014 <b>Introduction</b>",
+      "link": "https://modelcontextprotocol.io/introduction",
+      "displayLink": "modelcontextprotocol.io",
+      "snippet": "The Model Context Protocol (MCP) is an open protocol that standardizes how applications provide context to large language models.",
+      "htmlSnippet": "The Model Context Protocol (MCP) is an <b>open protocol</b> that standardizes how applications provide context to large language models.",
+      "pagemap": {
+        "metatags": [
+          {
+            "og:site_name": "Model Context Protocol",
+            "article:published_time": "2025-03-26T14:21:07.000Z",
+            "og:title": "Model Context Protocol \u2014 Introduction",
+            "og:description": "An open protocol that standardizes how applications provide context to LLMs."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Introducing the Model Context Protocol",
+      "htmlTitle": "<b>Introducing</b> the Model Context Protocol",
+      "link": "https://www.anthropic.com/news/model-context-protocol",
+      "displayLink": "www.anthropic.com",
+      "snippet": "The Model Context Protocol is an open standard that enables developers to build secure, two-way connections between their data sources and AI-powered tools.",
+      "htmlSnippet": "The <b>Model Context Protocol</b> is an open standard that enables developers to build secure, two-way connections.",
+      "pagemap": {
+        "metatags": [
+          {
+            "og:site_name": "Anthropic",
+            "article:published_time": "2024-11-25T10:00:00.000Z",
+            "og:title": "Introducing the Model Context Protocol"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Specification \u2014 Model Context Protocol",
+      "htmlTitle": "<b>Specification</b> \u2014 Model Context Protocol",
+      "link": "https://modelcontextprotocol.io/specification/2025-03-26",
+      "displayLink": "modelcontextprotocol.io",
+      "snippet": "This document specifies the Model Context Protocol revision 2025-03-26, including JSON-RPC message shapes, lifecycle and transports.",
+      "htmlSnippet": "This document specifies the <b>Model Context Protocol</b> revision 2025-03-26.",
+      "pagemap": {
+        "metatags": [
+          {
+            "og:site_name": "Model Context Protocol",
+            "article:published_time": "2025-04-11T09:02:44.000Z"
+          }
+        ]
+      }
+    }
+  ]
+}

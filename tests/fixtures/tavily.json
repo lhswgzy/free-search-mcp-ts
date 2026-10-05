@@ -1,0 +1,28 @@
+{
+  "query": "model context protocol",
+  "answer": "The Model Context Protocol (MCP) is an open standard introduced by Anthropic that lets LLM applications connect to external tools and data sources through a uniform JSON-RPC interface.",
+  "response_time": 1.42,
+  "results": [
+    {
+      "title": "Model Context Protocol - Introduction",
+      "url": "https://modelcontextprotocol.io/introduction",
+      "content": "The Model Context Protocol (MCP) is an open protocol that standardizes how applications provide context to large language models (LLMs). Think of MCP like a USB-C port for AI applications: just as USB-C provides a standardized way to connect devices to various peripherals, MCP provides a standardized way to connect AI models to different data sources and tools. MCP follows a client-host-server architecture and uses JSON-RPC 2.0 messages over stdio or streamable HTTP.",
+      "score": 0.9614,
+      "published_date": "2025-03-26T14:21:07"
+    },
+    {
+      "title": "Specification - Model Context Protocol (2025-03-26)",
+      "url": "https://modelcontextprotocol.io/specification/2025-03-26",
+      "content": "This specification defines the Model Context Protocol revision 2025-03-26. It covers the base protocol, the message framing used by each transport, the lifecycle (initialise, operation, shutdown) and the server features: resources, prompts and tools. Clients and servers MUST negotiate a protocol version during initialisation.",
+      "score": 0.9142,
+      "published_date": "2025-04-11T09:02:44"
+    },
+    {
+      "title": "Introducing the Model Context Protocol",
+      "url": "https://www.anthropic.com/news/model-context-protocol",
+      "content": "Today we are open-sourcing the Model Context Protocol (MCP), a new standard for connecting AI assistants to the systems where data lives, including content repositories, business tools and development environments. Early adopters include Block, Apollo, Zed, Replit, Codeium and Sourcegraph.",
+      "score": 0.8877,
+      "published_date": "2024-11-25T10:00:00"
+    }
+  ]
+}

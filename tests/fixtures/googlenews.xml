@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Synthetic fixture: https://news.google.com/rss/search?q=model+context+protocol&hl=en-US&gl=US&ceid=US:en
+  news.google.com is unreachable from the authoring machine. The `description`
+  blob reproduces Google's `<a>Headline</a>&nbsp;&nbsp;<font>Publisher</font>`
+  boilerplate followed by the article summary; one item is CJK to exercise the
+  non-latin path, and the last item has a headline-less description (a real feed
+  shape) to check that the publisher-only fallback does not eat the snippet.
+-->
+<rss version="2.0">
+  <channel>
+    <title>model context protocol - Google News</title>
+    <link>https://news.google.com/search?q=model+context+protocol&amp;hl=en-US&amp;gl=US&amp;ceid=US:en</link>
+    <description>Google News</description>
+    <language>en-US</language>
+    <lastBuildDate>Sat, 13 Dec 2025 09:12:44 GMT</lastBuildDate>
+    <item>
+      <title>Anthropic expands the Model Context Protocol with a registry for tool servers - The Verge</title>
+      <link>https://news.google.com/rss/articles/CBMiXkFVX3lxTFB2bW9kZWxjb250ZXh0?oc=5</link>
+      <guid isPermaLink="false">CBMiXkFVX3lxTFB2bW9kZWxjb250ZXh0</guid>
+      <pubDate>Sat, 13 Dec 2025 07:45:00 GMT</pubDate>
+      <description>&lt;a href="https://news.google.com/rss/articles/CBMiXkFVX3lxTFB2bW9kZWxjb250ZXh0?oc=5"&gt;Anthropic expands the Model Context Protocol with a registry for tool servers&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;font color="#6f6f6f"&gt;The Verge&lt;/font&gt;&lt;p&gt;The registry lets server authors publish signed manifests that clients can discover without out-of-band configuration.&lt;/p&gt;</description>
+      <source url="https://www.theverge.com">The Verge</source>
+    </item>
+    <item>
+      <title>MCP is becoming the USB-C port of AI agents, and everyone wants a plug - Ars Technica</title>
+      <link>https://news.google.com/rss/articles/CBMiYkFVX3lxTE1DUHVzYi1j?oc=5</link>
+      <guid isPermaLink="false">CBMiYkFVX3lxTE1DUHVzYi1j</guid>
+      <pubDate>Fri, 12 Dec 2025 18:02:11 GMT</pubDate>
+      <description>&lt;a href="https://news.google.com/rss/articles/CBMiYkFVX3lxTE1DUHVzYi1j?oc=5"&gt;MCP is becoming the USB-C port of AI agents, and everyone wants a plug&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;font color="#6f6f6f"&gt;Ars Technica&lt;/font&gt;&lt;p&gt;Every major agent framework now ships an MCP client, and the interoperability story is finally boring.&lt;/p&gt;</description>
+      <source url="https://arstechnica.com">Ars Technica</source>
+    </item>
+    <item>
+      <title>模型上下文协议（MCP）成为国内大模型工具调用的通用标准 - 机器之心</title>
+      <link>https://news.google.com/rss/articles/CBMiZkFVX3lxTE1vZGVsfGNu?oc=5</link>
+      <guid isPermaLink="false">CBMiZkFVX3lxTE1vZGVsfGNu</guid>
+      <pubDate>Thu, 11 Dec 2025 03:20:37 GMT</pubDate>
+      <description>&lt;a href="https://news.google.com/rss/articles/CBMiZkFVX3lxTE1vZGVsfGNu?oc=5"&gt;模型上下文协议（MCP）成为国内大模型工具调用的通用标准&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;font color="#6f6f6f"&gt;机器之心&lt;/font&gt;&lt;p&gt;多家厂商已在其开放平台提供兼容 MCP 的工具接入层，开发者可以用同一套配置连接不同模型。&lt;/p&gt;</description>
+      <source url="https://www.jiqizhixin.com">机器之心</source>
+    </item>
+    <item>
+      <title>Security researchers find prompt-injection flaws in popular MCP servers - BleepingComputer</title>
+      <link>https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1DUHNlY3VyZQ?oc=5</link>
+      <guid isPermaLink="false">CBMiZ0FVX3lxTE1DUHNlY3VyZQ</guid>
+      <pubDate>Wed, 10 Dec 2025 14:55:09 GMT</pubDate>
+      <description>&lt;font color="#6f6f6f"&gt;BleepingComputer&lt;/font&gt;&lt;p&gt;Researchers showed that a crafted tool description can talk an agent into exfiltrating files through a second server.&lt;/p&gt;</description>
+      <source url="https://www.bleepingcomputer.com">BleepingComputer</source>
+    </item>
+  </channel>
+</rss>

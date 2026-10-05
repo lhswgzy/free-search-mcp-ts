@@ -1,0 +1,37 @@
+{
+  "requestId": "a1b2c3d4e5f60718",
+  "resolvedSearchType": "neural",
+  "results": [
+    {
+      "id": "https://modelcontextprotocol.io/introduction",
+      "title": "Model Context Protocol - Introduction",
+      "url": "https://modelcontextprotocol.io/introduction",
+      "publishedDate": "2025-03-26T00:00:00.000Z",
+      "author": null,
+      "text": "The Model Context Protocol (MCP) is an open protocol that standardizes how applications provide context to large language models. MCP provides a standardized way to connect AI models to different data sources and tools, and follows a client-host-server architecture.",
+      "score": 0.1892,
+      "summary": null
+    },
+    {
+      "id": "https://www.anthropic.com/news/model-context-protocol",
+      "title": "Introducing the Model Context Protocol",
+      "url": "https://www.anthropic.com/news/model-context-protocol",
+      "publishedDate": "2024-11-25T00:00:00.000Z",
+      "author": "Anthropic",
+      "text": "Today we are open-sourcing the Model Context Protocol (MCP), a new standard for connecting AI assistants to the systems where data lives. MCP addresses the fragmentation caused by bespoke integrations and is available as an open specification with reference SDKs.",
+      "score": 0.1731,
+      "summary": "Anthropic open-sources MCP, a standard for connecting assistants to external data."
+    },
+    {
+      "id": "https://arxiv.org/abs/2503.23278",
+      "title": "A Survey of the Model Context Protocol for Tool-Using Agents",
+      "url": "https://arxiv.org/abs/2503.23278",
+      "publishedDate": "2025-03-30T00:00:00.000Z",
+      "author": "L. Chen, R. Kapoor, et al.",
+      "text": "We survey the Model Context Protocol and compare it with prior tool-use interfaces such as OpenAI function calling and LangChain tools, covering security, discovery and lifecycle management for tool-using agents.",
+      "score": 0.1644,
+      "summary": "A survey comparing MCP with earlier tool-use interfaces for LLM agents."
+    }
+  ],
+  "costDollars": { "total": 0.007 }
+}
