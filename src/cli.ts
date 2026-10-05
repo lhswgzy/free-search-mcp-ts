@@ -42,6 +42,8 @@ interface ParsedArgs {
   flags: Map<string, string | boolean | string[]>;
 }
 
+export type { ParsedArgs };
+
 /** Flags that may be given more than once and accumulate. */
 const REPEATABLE = new Set(['client', 'engines', 'include', 'exclude', 'env']);
 
@@ -195,7 +197,7 @@ ENVIRONMENT
                             Optional keys that unlock higher-quality engines
 `;
 
-const COMMAND_ALIASES: Record<string, string> = {
+export const COMMAND_ALIASES: Record<string, string> = {
   mcp: 'serve',
   server: 'serve',
   stdio: 'serve',
@@ -212,6 +214,15 @@ const COMMAND_ALIASES: Record<string, string> = {
   setup: 'install',
   check: 'doctor',
 };
+
+/**
+ * Resolve the command a parsed argv asks for: aliases are folded, and no
+ * command at all means `serve`, which is what an MCP client expects when it
+ * spawns this binary with no arguments.
+ */
+export function resolveCommand(args: ParsedArgs): string {
+  return args.command ? (COMMAND_ALIASES[args.command] ?? args.command) : 'serve';
+}
 
 /* ------------------------------------------------------------------ *
  * Output helpers
@@ -253,7 +264,7 @@ export async function main(argv: readonly string[] = process.argv.slice(2)): Pro
   if (flagBool(args, 'verbose')) setLogLevel('debug');
   if (flagBool(args, 'quiet')) setLogLevel('silent');
 
-  const command = args.command ? (COMMAND_ALIASES[args.command] ?? args.command) : 'serve';
+  const command = resolveCommand(args);
 
   const dataDir = flagString(args, 'data-dir');
   const config = loadConfig(dataDir ? { dataDir } : {});

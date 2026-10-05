@@ -296,7 +296,11 @@ export function htmlToMarkdown(html: string, options: ConvertOptions = {}): Read
       try {
         const reader = new ReadabilityCtor(doc, {
           charThreshold: options.charThreshold ?? 200,
-          keepClasses: false,
+          // Classes have to survive Readability: the code-block rule below reads
+          // the `language-*` class off `<code>` to tag a fenced block, and
+          // Readability's default `_cleanClasses` pass erases it, silently
+          // turning every code block into an unlabelled fence.
+          keepClasses: true,
           disableJSONLD: false,
         });
         const article = reader.parse();
@@ -362,7 +366,10 @@ export function cleanMarkdown(markdown: string): string {
       if (/^(?:share|tweet|advertisement|sponsored|related articles?|table of contents|skip to main content)$/i.test(t)) {
         return false;
       }
-      if (/^[|\s-]+$/.test(t) && t.includes('|')) return false; // empty table rows
+      // Empty table rows (`|  |  |`) are noise. The delimiter row of a GFM table
+      // (`| --- | --- |`) looks similar but is what makes the table render, so
+      // lines containing a dash are deliberately kept.
+      if (/^[|\s]+$/.test(t) && t.includes('|')) return false;
       return true;
     })
     .join('\n');

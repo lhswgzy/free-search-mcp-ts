@@ -233,14 +233,23 @@ const fetchUrl = defineTool({
   },
   annotations: { readOnlyHint: true, openWorldHint: true },
   async handler(args, services) {
-    const page = await services.fetch.fetchPage(args.url, {
-      ...(args.max_chars ? { maxChars: args.max_chars } : {}),
-      ...(args.offset !== undefined ? { offset: args.offset } : {}),
-      ...(args.refresh !== undefined ? { refresh: args.refresh } : {}),
-      ...(args.use_cache !== undefined ? { useCache: args.use_cache } : {}),
-      ...(args.respect_robots !== undefined ? { respectRobots: args.respect_robots } : {}),
-      includeLinks: args.include_links ?? false,
-    });
+    let page: FetchedPage;
+    try {
+      page = await services.fetch.fetchPage(args.url, {
+        ...(args.max_chars ? { maxChars: args.max_chars } : {}),
+        ...(args.offset !== undefined ? { offset: args.offset } : {}),
+        ...(args.refresh !== undefined ? { refresh: args.refresh } : {}),
+        ...(args.use_cache !== undefined ? { useCache: args.use_cache } : {}),
+        ...(args.respect_robots !== undefined ? { respectRobots: args.respect_robots } : {}),
+        includeLinks: args.include_links ?? false,
+      });
+    } catch (err) {
+      // A refused URL (SSRF guard, robots.txt, HTTP error) is an answer, not a
+      // crash: the CLI calls this handler directly and must print a clean
+      // message, and the MCP server should not have to translate a stack trace.
+      const message = err instanceof Error ? err.message : String(err);
+      return { text: `Could not fetch \`${args.url}\`: ${message}`, isError: true };
+    }
 
     const text = args.format === 'json' ? pageToJson(page, args.include_links ?? false) : renderFetchedPage({ page, includeLinks: args.include_links ?? false });
     return args.format === 'json' ? { text, structured: JSON.parse(text) as Record<string, unknown> } : { text };

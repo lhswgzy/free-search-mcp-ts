@@ -19,10 +19,17 @@
 
 import type { EngineSearchOptions, RawResult, SearchEngine } from '../types.js';
 import { cap, detectBlock, extractResults, fetchHtml, parse, parseDateLoose, queryAll, queryOne, textOf, attrOf, cleanSnippet, absoluteUrl, type EngineDeps } from './kit.js';
-import { normalizeUrl } from '../util/url.js';
+import { normalizeUrl, extractWrapperTarget } from '../util/url.js';
 
 /** Bing's own hosts plus the syndication hosts it links to internally. */
 const SELF_HOSTS = ['bing.com', 'www.bing.com', 'cn.bing.com', 'go.microsoft.com', 'microsofttranslator.com', 'msn.com'];
+
+/**
+ * Hosts whose hrefs may be Bing's own click tracker rather than the target.
+ * Unwrapping is gated on these so a legitimate `?u=` or `?q=` parameter on a
+ * third-party result URL is never mistaken for a redirect wrapper.
+ */
+const WRAPPER_HOSTS = new Set(['bing.com', 'www.bing.com', 'cn.bing.com']);
 
 const FRESHNESS: Record<string, string> = {
   day: 'ex1:"ez1"',
@@ -135,9 +142,34 @@ export function createBingEngine({ http, config }: EngineDeps): SearchEngine {
         if (iso) r.publishedAt = iso;
       }
 
+      // Some responses hand back `https://www.bing.com/ck/a?!&…&u=a1<base64>`
+      // click trackers instead of the destination. Resolve them last, so the
+      // date sweep above can still match the href Bing actually printed, and the
+      // URL the caller sees (and the dedupe key and cache entry are built from)
+      // is the real page rather than a redirect that hides it.
+      for (const r of results) {
+        const unwrapped = unwrapBingWrapper(r.url);
+        if (unwrapped) r.url = unwrapped;
+      }
+
       return cap(results, options.limit);
     },
   };
+}
+
+/**
+ * Decode Bing's `ck/a?u=a1<base64>` click tracker into its real destination.
+ *
+ * Returns the normalised target URL, or undefined when the href is not a Bing
+ * wrapper we understand — in which case the caller keeps the original URL,
+ * because the fetch tool follows redirects anyway.
+ */
+function unwrapBingWrapper(url: string): string | undefined {
+  const normalized = normalizeUrl(url);
+  if (!normalized || !WRAPPER_HOSTS.has(normalized.host)) return undefined;
+  const target = extractWrapperTarget(url);
+  if (!target) return undefined;
+  return normalizeUrl(target)?.url;
 }
 
 /**
@@ -148,5 +180,9 @@ export function stripBingTitleNoise(title: string): string {
   let t = title.trim();
   t = t.replace(/^[a-z0-9.-]+\.[a-z]{2,}(?:\.[a-z]{2,})?(?:https?:\/\/[^\s]+)?/i, '');
   t = t.replace(/^https?:\/\/\S+/i, '');
+  // The host-prefix rule above consumes the host and the scheme's last letter
+  // (`host.comhttps:` survives as `://host.com/path Title`), so without this the
+  // "title" is a bare URL fragment with the real title stuck behind it.
+  t = t.replace(/^:?\/\/\S+/, '');
   return cleanSnippet(t, 300) || title.trim();
 }

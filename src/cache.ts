@@ -93,6 +93,22 @@ function escapeLike(s: string): string {
   return s.replace(/[\\%_]/g, (m) => `\\${m}`);
 }
 
+/**
+ * Convert FTS5's `bm25()` output into a positive, monotonic score.
+ *
+ * `bm25()` returns a negative number where *more negative is better*, so the
+ * sign is flipped for display. Rounding is deliberately avoided: on a small
+ * index IDF is close to zero and a genuine match scores around `-1e-6`, which
+ * `toFixed(4)` collapses to `-0` — every result then reports a score of zero
+ * and looks broken even though the SQL ordering is correct. Significant digits
+ * are kept instead, and `-0` is normalised so callers can test `score > 0`.
+ */
+export function normaliseBm25(raw: number): number {
+  const positive = -Number(raw);
+  if (!Number.isFinite(positive) || positive <= 0) return 0;
+  return Number(positive.toPrecision(6));
+}
+
 /* ------------------------------------------------------------------ *
  * In-memory fallback
  * ------------------------------------------------------------------ */
@@ -448,8 +464,7 @@ export class PageCache {
         url: r.url,
         title: r.title,
         snippet: (r.snippet || '').replace(/\s+/g, ' ').trim(),
-        // bm25() returns a negative number where more negative is better.
-        score: Number((-Number(r.score)).toFixed(4)),
+        score: normaliseBm25(r.score),
         fetchedAt: new Date(Number(r.fetched_at)).toISOString(),
       }));
     } catch (err) {

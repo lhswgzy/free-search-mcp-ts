@@ -76,7 +76,7 @@ export function tidyMarkdown(md: string): string {
 }
 
 export function truncate(text: string, max: number, ellipsis = '…'): string {
-  if (!text) return '';
+  if (!text || max <= 0) return '';
   if (text.length <= max) return text;
   const cut = text.slice(0, Math.max(0, max - ellipsis.length));
   // Prefer to cut at a paragraph or sentence boundary.

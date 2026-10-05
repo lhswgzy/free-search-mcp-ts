@@ -128,12 +128,6 @@ export interface RunningHttpServer {
  */
 export async function runHttpServer(services: Services, options: HttpServerOptions): Promise<RunningHttpServer> {
   const mcpPath = options.path ?? '/mcp';
-  const server = createMcpServer(services);
-  const transport = new StreamableHTTPServerTransport({
-    sessionIdGenerator: undefined,
-    enableJsonResponse: true,
-  });
-  await server.connect(transport);
 
   const http = createHttpServer((req, res) => {
     void handle(req, res);
@@ -186,13 +180,37 @@ export async function runHttpServer(services: Services, options: HttpServerOptio
       return;
     }
 
+    // A fresh server and transport per request is the documented stateless
+    // pattern for the streamable HTTP transport. Sharing one transport across
+    // requests looks like it works — the first initialize succeeds — but the
+    // transport then treats the connection as already initialised and stops
+    // answering `tools/list` and `tools/call` correctly. Constructing the
+    // server is cheap (tool registration is in-memory), so pay it per request
+    // and get correct behaviour.
+    const server = createMcpServer(services);
+    const transport = new StreamableHTTPServerTransport({
+      sessionIdGenerator: undefined,
+      enableJsonResponse: true,
+    });
+
+    const cleanup = (): void => {
+      void transport.close().catch(() => {});
+      void server.close().catch(() => {});
+    };
+    res.on('close', cleanup);
+
     try {
+      await server.connect(transport);
       await transport.handleRequest(req, res);
     } catch (err) {
       log.warn(`http request failed: ${(err as Error).message}`);
       if (!res.headersSent) {
         res.writeHead(500, { 'content-type': 'application/json' }).end(JSON.stringify({ error: 'internal error' }));
       }
+    } finally {
+      // For a JSON response the reply is already flushed; for an SSE stream the
+      // response's 'close' event drives cleanup instead.
+      if (res.writableEnded) cleanup();
     }
   }
 
@@ -211,7 +229,6 @@ export async function runHttpServer(services: Services, options: HttpServerOptio
     url,
     async close() {
       await new Promise<void>((resolve) => http.close(() => resolve()));
-      await server.close();
     },
   };
 }

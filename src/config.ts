@@ -107,13 +107,30 @@ function envInt(names: string[], fallback: number): number {
   return Number.isFinite(n) && n >= 0 ? n : fallback;
 }
 
+/** Like `envInt` but for values that legitimately carry a fraction (hours). */
+function envNumber(names: string[], fallback: number): number {
+  const v = envLookup(names);
+  if (v === undefined) return fallback;
+  const n = Number(v.trim());
+  return Number.isFinite(n) && n >= 0 ? n : fallback;
+}
+
+/** Parse a boolean the way shell users write one. Returns undefined if unknown. */
+function parseBool(value: unknown): boolean | undefined {
+  if (typeof value === 'boolean') return value;
+  if (typeof value === 'number') return value !== 0;
+  if (typeof value === 'string') {
+    const s = value.toLowerCase().trim();
+    if (['1', 'true', 'yes', 'on', 'y'].includes(s)) return true;
+    if (['0', 'false', 'no', 'off', 'n', ''].includes(s)) return false;
+  }
+  return undefined;
+}
+
 function envBool(names: string[], fallback: boolean): boolean {
   const v = envLookup(names);
   if (v === undefined) return fallback;
-  const s = v.toLowerCase().trim();
-  if (['1', 'true', 'yes', 'on', 'y'].includes(s)) return true;
-  if (['0', 'false', 'no', 'off', 'n', ''].includes(s)) return false;
-  return fallback;
+  return parseBool(v) ?? fallback;
 }
 
 function envList(names: string[]): string[] | undefined {
@@ -170,6 +187,32 @@ function pick<T>(file: Record<string, unknown>, key: string, fallback: T): T {
   return v === undefined || v === null ? fallback : (v as T);
 }
 
+/**
+ * Read a numeric option from `config.json`.
+ *
+ * `pick` alone only casts, so a hand-edited `{"timeoutMs": "30s"}` would put a
+ * string into a field typed `number` and turn every later comparison into NaN.
+ * Values are validated exactly like their environment-variable counterparts
+ * (unparseable or negative values fall back to the default).
+ */
+function pickNumber(file: Record<string, unknown>, key: string, fallback: number): number {
+  const v = file[key];
+  if (v === undefined || v === null || v === '') return fallback;
+  const n = typeof v === 'number' ? v : Number(String(v).trim());
+  return Number.isFinite(n) && n >= 0 ? n : fallback;
+}
+
+/**
+ * Read a boolean option from `config.json`.
+ *
+ * A real JSON boolean works either way, but a hand-edited file often holds
+ * `"false"` — which a bare cast would keep as a truthy string and turn into the
+ * opposite of what it says.
+ */
+function pickBool(file: Record<string, unknown>, key: string, fallback: boolean): boolean {
+  return parseBool(file[key]) ?? fallback;
+}
+
 export interface LoadConfigOptions {
   dataDir?: string;
   overrides?: Partial<Config>;
@@ -221,45 +264,46 @@ export function loadConfig(options: LoadConfigOptions = {}): Config {
       envList(['FREE_SEARCH_FALLBACK_ENGINES']) ??
       (Array.isArray(file.fallbackEngines) ? (file.fallbackEngines as string[]) : [...FALLBACK_ENGINES]),
 
-    maxResults: envInt(['FREE_SEARCH_MAX_RESULTS', 'FSMCP_MAX_RESULTS'], pick(file, 'maxResults', 12)),
-    perEngineResults: envInt(['FREE_SEARCH_PER_ENGINE', 'FSMCP_PER_ENGINE'], pick(file, 'perEngineResults', 10)),
+    maxResults: envInt(['FREE_SEARCH_MAX_RESULTS', 'FSMCP_MAX_RESULTS'], pickNumber(file, 'maxResults', 12)),
+    perEngineResults: envInt(['FREE_SEARCH_PER_ENGINE', 'FSMCP_PER_ENGINE'], pickNumber(file, 'perEngineResults', 10)),
     minResultsBeforeFallback: envInt(
       ['FREE_SEARCH_MIN_RESULTS', 'FSMCP_MIN_RESULTS'],
-      pick(file, 'minResultsBeforeFallback', 5),
+      pickNumber(file, 'minResultsBeforeFallback', 5),
     ),
-    timeoutMs: envInt(['FREE_SEARCH_TIMEOUT', 'FSMCP_TIMEOUT'], pick(file, 'timeoutMs', 15000)),
-    retries: envInt(['FREE_SEARCH_RETRIES', 'FSMCP_RETRIES'], pick(file, 'retries', 1)),
-    concurrency: envInt(['FREE_SEARCH_CONCURRENCY', 'FSMCP_CONCURRENCY'], pick(file, 'concurrency', 6)),
-    engineFailureThreshold: envInt(['FREE_SEARCH_ENGINE_FAILURES'], pick(file, 'engineFailureThreshold', 3)),
-    engineCooldownMs: envInt(['FREE_SEARCH_ENGINE_COOLDOWN_MS'], pick(file, 'engineCooldownMs', 10 * 60 * 1000)),
+    timeoutMs: envInt(['FREE_SEARCH_TIMEOUT', 'FSMCP_TIMEOUT'], pickNumber(file, 'timeoutMs', 15000)),
+    retries: envInt(['FREE_SEARCH_RETRIES', 'FSMCP_RETRIES'], pickNumber(file, 'retries', 1)),
+    concurrency: envInt(['FREE_SEARCH_CONCURRENCY', 'FSMCP_CONCURRENCY'], pickNumber(file, 'concurrency', 6)),
+    engineFailureThreshold: envInt(['FREE_SEARCH_ENGINE_FAILURES'], pickNumber(file, 'engineFailureThreshold', 3)),
+    engineCooldownMs: envInt(['FREE_SEARCH_ENGINE_COOLDOWN_MS'], pickNumber(file, 'engineCooldownMs', 10 * 60 * 1000)),
 
     proxy,
     userAgent: envStr(['FREE_SEARCH_USER_AGENT', 'FSMCP_USER_AGENT'], pick(file, 'userAgent', undefined)),
-    rotateUserAgent: envBool(['FREE_SEARCH_ROTATE_UA', 'FSMCP_ROTATE_UA'], pick(file, 'rotateUserAgent', true)),
+    rotateUserAgent: envBool(['FREE_SEARCH_ROTATE_UA', 'FSMCP_ROTATE_UA'], pickBool(file, 'rotateUserAgent', true)),
 
-    cacheEnabled: envBool(['FREE_SEARCH_CACHE', 'FSMCP_CACHE'], pick(file, 'cacheEnabled', true)),
+    cacheEnabled: envBool(['FREE_SEARCH_CACHE', 'FSMCP_CACHE'], pickBool(file, 'cacheEnabled', true)),
+    // The millisecond form is read first, then the hours form, then the 24 hour
+    // default. The millisecond fallback has to be 0 (falsy) for the hours knob
+    // to be reachable at all.
     cacheTtlMs:
-      envInt(['FREE_SEARCH_CACHE_TTL_MS'], pick(file, 'cacheTtlMs', 24 * 60 * 60 * 1000)) ||
-      Math.round(
-        Number(envStr(['FREE_SEARCH_CACHE_TTL_HOURS'], String(pick(file, 'cacheTtlHours', 24)))) * 3600 * 1000,
-      ),
+      envInt(['FREE_SEARCH_CACHE_TTL_MS'], pickNumber(file, 'cacheTtlMs', 0)) ||
+      Math.round(envNumber(['FREE_SEARCH_CACHE_TTL_HOURS'], pickNumber(file, 'cacheTtlHours', 24)) * 3600 * 1000),
     searchCacheTtlMs: envInt(
       ['FREE_SEARCH_SEARCH_CACHE_TTL_MS', 'FSMCP_SEARCH_CACHE_TTL'],
-      pick(file, 'searchCacheTtlMs', 15 * 60 * 1000),
+      pickNumber(file, 'searchCacheTtlMs', 15 * 60 * 1000),
     ),
 
-    respectRobots: envBool(['FREE_SEARCH_RESPECT_ROBOTS', 'FSMCP_RESPECT_ROBOTS'], pick(file, 'respectRobots', true)),
-    allowPrivateHosts: envBool(['FREE_SEARCH_ALLOW_PRIVATE', 'FSMCP_ALLOW_PRIVATE'], pick(file, 'allowPrivateHosts', false)),
+    respectRobots: envBool(['FREE_SEARCH_RESPECT_ROBOTS', 'FSMCP_RESPECT_ROBOTS'], pickBool(file, 'respectRobots', true)),
+    allowPrivateHosts: envBool(['FREE_SEARCH_ALLOW_PRIVATE', 'FSMCP_ALLOW_PRIVATE'], pickBool(file, 'allowPrivateHosts', false)),
     safeSearch: (envStr(['FREE_SEARCH_SAFE_SEARCH', 'FSMCP_SAFE_SEARCH'], pick(file, 'safeSearch', 'moderate')) as SafeSearchLevel),
     region: envStr(['FREE_SEARCH_REGION', 'FSMCP_REGION'], pick(file, 'region', undefined)),
     language: envStr(['FREE_SEARCH_LANGUAGE', 'FSMCP_LANGUAGE', 'FSMCP_LANG'], pick(file, 'language', undefined)),
 
-    maxFetchBytes: envInt(['FREE_SEARCH_MAX_BYTES', 'FSMCP_MAX_BYTES'], pick(file, 'maxFetchBytes', 5 * 1024 * 1024)),
+    maxFetchBytes: envInt(['FREE_SEARCH_MAX_BYTES', 'FSMCP_MAX_BYTES'], pickNumber(file, 'maxFetchBytes', 5 * 1024 * 1024)),
     maxMarkdownChars: envInt(
       ['FREE_SEARCH_MAX_CHARS', 'FSMCP_MAX_CHARS'],
-      pick(file, 'maxMarkdownChars', 120_000),
+      pickNumber(file, 'maxMarkdownChars', 120_000),
     ),
-    maxRedirects: envInt(['FREE_SEARCH_MAX_REDIRECTS'], pick(file, 'maxRedirects', 8)),
+    maxRedirects: envInt(['FREE_SEARCH_MAX_REDIRECTS'], pickNumber(file, 'maxRedirects', 8)),
 
     rrfK: Number(envStr(['FREE_SEARCH_RRF_K', 'FSMCP_RRF_K'], String(pick(file, 'rrfK', 60)))) || 60,
 
@@ -279,8 +323,13 @@ export function loadConfig(options: LoadConfigOptions = {}): Config {
   };
 
   if (options.overrides) {
-    Object.assign(config, options.overrides);
-    if (options.overrides.keys) config.keys = { ...config.keys, ...options.overrides.keys };
+    // `keys` is merged, not replaced: a caller that overrides one key must not
+    // drop the keys that came from the environment. Assigning the whole
+    // overrides object would already have clobbered `config.keys`, so it is
+    // removed from the spread first.
+    const { keys, ...rest } = options.overrides;
+    Object.assign(config, rest);
+    if (keys) config.keys = { ...config.keys, ...keys };
   }
 
   applyProxyEnv(config);
